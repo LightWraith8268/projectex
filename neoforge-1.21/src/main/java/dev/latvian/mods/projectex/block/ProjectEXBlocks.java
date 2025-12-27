@@ -52,6 +52,19 @@ public class ProjectEXBlocks {
 				}
 			});
 
+	// Link Blocks
+	public static final DeferredBlock<Block> PERSONAL_LINK =
+			REGISTRY.register("personal_link", PersonalLinkBlock::new);
+
+	public static final DeferredBlock<Block> ENERGY_LINK =
+			REGISTRY.register("energy_link", EnergyLinkBlock::new);
+
+	public static final DeferredBlock<Block> REFINED_LINK =
+			REGISTRY.register("refined_link", RefinedLinkBlock::new);
+
+	public static final DeferredBlock<Block> COMPRESSED_REFINED_LINK =
+			REGISTRY.register("compressed_refined_link", CompressedRefinedLinkBlock::new);
+
 	// Transmutation Tables
 	public static final DeferredBlock<Block> STONE_TABLE =
 			REGISTRY.register("stone_table", StoneTableBlock::new);
