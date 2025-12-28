@@ -42,11 +42,12 @@ public class ProjectEXBlockStateProvider extends BlockStateProvider {
 					modLoc("block/collector/" + matter.name)));
 		}
 
-		// Power Flowers - all tiers
+		// Power Flowers - all tiers (custom model with collector and relay textures)
 		for (Matter matter : Matter.VALUES) {
 			simpleBlock(ProjectEXBlocks.POWER_FLOWER.get(matter).get(),
 				models().withExistingParent(matter.name + "_power_flower", modLoc("block/power_flower"))
-					.texture("top", modLoc("block/power_flower/" + matter.name)));
+					.texture("collector", modLoc("block/collector/" + matter.name))
+					.texture("relay", modLoc("block/relay/" + matter.name)));
 		}
 
 		// Relays - all tiers
