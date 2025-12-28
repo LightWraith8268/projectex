@@ -19,9 +19,14 @@
 
 package dev.latvian.mods.projectex.container;
 
+import moze_intel.projecte.api.capabilities.IKnowledgeProvider;
+import moze_intel.projecte.api.capabilities.PECapabilities;
+import moze_intel.projecte.api.capabilities.block_entity.IEmcStorage;
+import moze_intel.projecte.api.capabilities.item.IItemEmcHolder;
 import moze_intel.projecte.gameObjs.container.TransmutationContainer;
 import moze_intel.projecte.gameObjs.container.slots.SlotPredicates;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.SimpleContainer;
@@ -34,6 +39,7 @@ import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 
+import java.math.BigInteger;
 import java.util.Optional;
 
 /**
@@ -156,6 +162,67 @@ public class AlchemyTableMenu extends TransmutationContainer {
 	}
 
 	/**
+	 * Klein Star Auto-Charging (Phase 4)
+	 * Called every tick to charge Klein Star from player's EMC pool
+	 * Default charge rate: 1000 EMC/tick (configurable later)
+	 */
+	public void chargeKleinStar() {
+		if (player.level().isClientSide) {
+			return; // Only process on server
+		}
+
+		// Only charge for server players
+		if (!(player instanceof ServerPlayer serverPlayer)) {
+			return;
+		}
+
+		// Check if Klein Star slot has an item
+		ItemStack kleinStarStack = kleinStarSlot.getItem(0);
+		if (kleinStarStack.isEmpty()) {
+			return;
+		}
+
+		// Get Klein Star's EMC holder capability
+		IItemEmcHolder kleinStarHolder = kleinStarStack.getCapability(PECapabilities.EMC_HOLDER_ITEM_CAPABILITY);
+		if (kleinStarHolder == null) {
+			return; // Not a Klein Star
+		}
+
+		// Get player's knowledge provider for EMC access
+		IKnowledgeProvider knowledge = serverPlayer.getCapability(PECapabilities.KNOWLEDGE_CAPABILITY);
+		if (knowledge == null) {
+			return; // Player has no EMC capability
+		}
+
+		// Calculate how much EMC to transfer
+		BigInteger playerEmc = knowledge.getEmc();
+		long neededEmc = kleinStarHolder.getNeededEmc(kleinStarStack);
+
+		if (neededEmc <= 0 || playerEmc.compareTo(BigInteger.ZERO) <= 0) {
+			return; // Klein Star is full or player has no EMC
+		}
+
+		// Charge rate: 1000 EMC/tick (configurable later)
+		long chargeRate = 1000L;
+		long emcToTransfer = Math.min(chargeRate, Math.min(playerEmc.longValue(), neededEmc));
+
+		// Try to insert EMC into Klein Star (simulate first)
+		long actualInserted = kleinStarHolder.insertEmc(kleinStarStack, emcToTransfer, IEmcStorage.EmcAction.SIMULATE);
+
+		if (actualInserted > 0) {
+			// Extract from player
+			BigInteger newPlayerEmc = playerEmc.subtract(BigInteger.valueOf(actualInserted));
+			knowledge.setEmc(newPlayerEmc);
+
+			// Insert into Klein Star (execute)
+			kleinStarHolder.insertEmc(kleinStarStack, actualInserted, IEmcStorage.EmcAction.EXECUTE);
+
+			// Mark container as changed to sync to client
+			broadcastChanges();
+		}
+	}
+
+	/**
 	 * Update the crafting result slot based on current crafting grid contents
 	 */
 	private void updateCraftingResult() {
@@ -197,6 +264,17 @@ public class AlchemyTableMenu extends TransmutationContainer {
 		if (container == craftingGrid) {
 			updateCraftingResult();
 		}
+	}
+
+	/**
+	 * Called every tick on the server - used for Klein Star auto-charging
+	 */
+	@Override
+	public void broadcastChanges() {
+		super.broadcastChanges();
+
+		// Charge Klein Star from player's EMC pool (1000 EMC/tick)
+		chargeKleinStar();
 	}
 
 	/**
