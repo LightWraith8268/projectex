@@ -27,7 +27,10 @@ import moze_intel.projecte.api.proxy.IEMCProxy;
 import moze_intel.projecte.gameObjs.container.TransmutationContainer;
 import moze_intel.projecte.gameObjs.container.slots.SlotPredicates;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.SimpleContainer;
@@ -161,7 +164,7 @@ public class AlchemyTableMenu extends TransmutationContainer {
 	/**
 	 * Called when an item is crafted - handles recipe consumption with smart ingredient priority
 	 * Phase 2: Ingredient consumption (inventory first, then EMC)
-	 * Phase 3: Auto-learn system (implemented later)
+	 * Phase 3: Auto-learn system (items with EMC are automatically learned)
 	 */
 	private void onCraftedItem(ItemStack craftedStack) {
 		if (player.level().isClientSide || !(player instanceof ServerPlayer serverPlayer)) {
@@ -184,9 +187,66 @@ public class AlchemyTableMenu extends TransmutationContainer {
 		boolean success = consumeIngredients(recipe, false);
 
 		if (success) {
+			// Phase 3: Auto-learn the crafted item if it has EMC value
+			autoLearnItem(craftedStack, serverPlayer);
+
 			// Clear the crafting grid after successful craft
 			craftingGrid.clearContent();
 			updateCraftingResult();
+		}
+	}
+
+	/**
+	 * Auto-learn system - automatically learns crafted items with EMC values
+	 * Phase 3: Auto-learn implementation
+	 *
+	 * @param craftedStack The item that was crafted
+	 * @param serverPlayer The player who crafted the item
+	 */
+	private void autoLearnItem(ItemStack craftedStack, ServerPlayer serverPlayer) {
+		// Check if item has EMC value
+		long emcValue = IEMCProxy.INSTANCE.getValue(craftedStack);
+		if (emcValue <= 0) {
+			// Item has no EMC value - don't learn
+			return;
+		}
+
+		// Get player's knowledge provider
+		IKnowledgeProvider knowledge = serverPlayer.getCapability(PECapabilities.KNOWLEDGE_CAPABILITY);
+		if (knowledge == null) {
+			return;
+		}
+
+		// Check if player already knows this item
+		if (knowledge.hasKnowledge(craftedStack)) {
+			// Already learned - no feedback needed
+			return;
+		}
+
+		// Learn the item
+		boolean learned = knowledge.addKnowledge(craftedStack);
+
+		if (learned) {
+			// Visual and audio feedback for learning
+			// Play level-up sound (higher pitch for learning)
+			serverPlayer.level().playSound(
+					null,
+					serverPlayer.blockPosition(),
+					SoundEvents.PLAYER_LEVELUP,
+					SoundSource.PLAYERS,
+					0.5F,  // Volume
+					2.0F   // Pitch (higher = more "sparkly")
+			);
+
+			// Display message in action bar (above hotbar)
+			Component learnMessage = Component.literal("§6✦ Learned: §f")
+					.append(craftedStack.getHoverName())
+					.append(Component.literal(" §7(§e" + emcValue + " EMC§7)"));
+
+			serverPlayer.displayClientMessage(learnMessage, true);
+
+			// Sync knowledge to client
+			knowledge.sync(serverPlayer);
 		}
 	}
 
@@ -522,6 +582,8 @@ public class AlchemyTableMenu extends TransmutationContainer {
 
 		// Perform bulk crafting
 		int totalCrafted = 0;
+		boolean hasLearnedThisSession = false; // Track if we've learned this item in this bulk craft
+
 		for (int i = 0; i < maxCrafts; i++) {
 			// Try to craft one item
 			if (!consumeIngredients(recipe, true)) {
@@ -538,6 +600,12 @@ public class AlchemyTableMenu extends TransmutationContainer {
 			if (!player.getInventory().add(result)) {
 				// Inventory full - stop crafting
 				break;
+			}
+
+			// Auto-learn on first craft only (prevent spam)
+			if (!hasLearnedThisSession) {
+				autoLearnItem(craftedStack, serverPlayer);
+				hasLearnedThisSession = true;
 			}
 
 			totalCrafted++;
