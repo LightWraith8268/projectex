@@ -19,10 +19,12 @@
 
 package dev.latvian.mods.projectex.block;
 
+import com.mojang.serialization.MapCodec;
 import dev.latvian.mods.projectex.block.entity.AlchemyTableEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
@@ -40,6 +42,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class AlchemyTableBlock extends BaseEntityBlock {
+	public static final MapCodec<AlchemyTableBlock> CODEC = simpleCodec(AlchemyTableBlock::new);
+
 	public static final VoxelShape SHAPE = Shapes.or(
 			box(0, 9, 0, 16, 13, 16),   // Table top
 			box(2, 0, 2, 4, 9, 4),      // Leg 1
@@ -54,6 +58,11 @@ public class AlchemyTableBlock extends BaseEntityBlock {
 				.sound(SoundType.STONE)
 				.noOcclusion()
 				.requiresCorrectToolForDrops());
+	}
+
+	@Override
+	protected MapCodec<? extends BaseEntityBlock> codec() {
+		return CODEC;
 	}
 
 	@Nullable

@@ -19,12 +19,13 @@
 
 package dev.latvian.mods.projectex.block;
 
+import com.mojang.serialization.MapCodec;
 import dev.latvian.mods.projectex.Matter;
 import dev.latvian.mods.projectex.block.entity.RelayBlockEntity;
-import moze_intel.projecte.utils.text.ILangEntry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -38,9 +39,13 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class RelayBlock extends BaseEntityBlock {
+	public static final MapCodec<RelayBlock> CODEC = simpleCodec(properties -> new RelayBlock(Matter.BASIC));
+	private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#,###,###,###");
+
 	public final Matter matter;
 
 	public RelayBlock(Matter m) {
@@ -49,6 +54,11 @@ public class RelayBlock extends BaseEntityBlock {
 				.sound(SoundType.STONE)
 				.requiresCorrectToolForDrops());
 		matter = m;
+	}
+
+	@Override
+	protected MapCodec<? extends BaseEntityBlock> codec() {
+		return CODEC;
 	}
 
 	@Nullable
@@ -73,10 +83,10 @@ public class RelayBlock extends BaseEntityBlock {
 		tooltipComponents.add(Component.translatable("block.projectex.relay.tooltip")
 				.withStyle(ChatFormatting.GRAY));
 		tooltipComponents.add(Component.translatable("block.projectex.relay.relay_bonus",
-						ILangEntry.DECIMAL_FORMAT.format(matter.relayBonus))
+						DECIMAL_FORMAT.format(matter.relayBonus))
 				.withStyle(ChatFormatting.GRAY));
 		tooltipComponents.add(Component.translatable("block.projectex.relay.max_transfer",
-						ILangEntry.DECIMAL_FORMAT.format(matter.relayTransfer))
+						DECIMAL_FORMAT.format(matter.relayTransfer))
 				.withStyle(ChatFormatting.GRAY));
 	}
 

@@ -19,12 +19,15 @@
 
 package dev.latvian.mods.projectex.block;
 
+import com.mojang.serialization.MapCodec;
 import dev.latvian.mods.projectex.block.entity.RefinedLinkBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
@@ -32,6 +35,20 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class RefinedLinkBlock extends LinkBaseBlock {
+	public static final MapCodec<RefinedLinkBlock> CODEC = simpleCodec(RefinedLinkBlock::new);
+
+	public RefinedLinkBlock(Properties properties) {
+		super(properties);
+	}
+
+	public RefinedLinkBlock() {
+		super();
+	}
+
+	@Override
+	protected MapCodec<? extends BaseEntityBlock> codec() {
+		return CODEC;
+	}
 
 	@Nullable
 	@Override

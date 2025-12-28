@@ -19,15 +19,16 @@
 
 package dev.latvian.mods.projectex.block;
 
+import com.mojang.serialization.MapCodec;
 import dev.latvian.mods.projectex.Matter;
 import dev.latvian.mods.projectex.block.entity.PowerFlowerBlockEntity;
-import moze_intel.projecte.utils.text.ILangEntry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
@@ -46,9 +47,13 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class PowerFlowerBlock extends BaseEntityBlock {
+	public static final MapCodec<PowerFlowerBlock> CODEC = simpleCodec(properties -> new PowerFlowerBlock(Matter.BASIC));
+	private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#,###,###,###");
+
 	public static final VoxelShape SHAPE = Shapes.or(
 			box(0, 0, 0, 16, 1, 16),
 			box(3.5, 4, 6.5, 12.5, 13, 9.5),
@@ -68,6 +73,11 @@ public class PowerFlowerBlock extends BaseEntityBlock {
 				.noOcclusion()
 				.requiresCorrectToolForDrops());
 		matter = m;
+	}
+
+	@Override
+	protected MapCodec<? extends BaseEntityBlock> codec() {
+		return CODEC;
 	}
 
 	@Nullable
@@ -119,7 +129,7 @@ public class PowerFlowerBlock extends BaseEntityBlock {
 		tooltipComponents.add(Component.translatable("block.projectex.collector.tooltip")
 				.withStyle(ChatFormatting.GRAY));
 		tooltipComponents.add(Component.translatable("block.projectex.collector.emc_produced",
-						ILangEntry.DECIMAL_FORMAT.format(matter.getPowerFlowerOutput()))
+						DECIMAL_FORMAT.format(matter.getPowerFlowerOutput()))
 				.withStyle(ChatFormatting.GRAY));
 	}
 

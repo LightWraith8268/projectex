@@ -19,13 +19,14 @@
 
 package dev.latvian.mods.projectex.block;
 
+import com.mojang.serialization.MapCodec;
 import dev.latvian.mods.projectex.Matter;
 import dev.latvian.mods.projectex.block.entity.CollectorBlockEntity;
-import moze_intel.projecte.utils.text.ILangEntry;
 import moze_intel.projecte.utils.text.PELang;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -39,9 +40,13 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class CollectorBlock extends BaseEntityBlock {
+	public static final MapCodec<CollectorBlock> CODEC = simpleCodec(properties -> new CollectorBlock(Matter.BASIC));
+	private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#,###,###,###");
+
 	public final Matter matter;
 
 	public CollectorBlock(Matter m) {
@@ -50,6 +55,11 @@ public class CollectorBlock extends BaseEntityBlock {
 				.sound(SoundType.STONE)
 				.requiresCorrectToolForDrops());
 		matter = m;
+	}
+
+	@Override
+	protected MapCodec<? extends BaseEntityBlock> codec() {
+		return CODEC;
 	}
 
 	@Nullable
@@ -74,7 +84,7 @@ public class CollectorBlock extends BaseEntityBlock {
 		tooltipComponents.add(Component.translatable("block.projectex.collector.tooltip")
 				.withStyle(ChatFormatting.GRAY));
 		tooltipComponents.add(Component.translatable("block.projectex.collector.emc_produced",
-						ILangEntry.DECIMAL_FORMAT.format(matter.collectorOutput))
+						DECIMAL_FORMAT.format(matter.collectorOutput))
 				.withStyle(ChatFormatting.GRAY));
 	}
 

@@ -19,13 +19,16 @@
 
 package dev.latvian.mods.projectex.block;
 
+import com.mojang.serialization.MapCodec;
 import dev.latvian.mods.projectex.block.entity.EnergyLinkBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -35,6 +38,20 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class EnergyLinkBlock extends LinkBaseBlock {
+	public static final MapCodec<EnergyLinkBlock> CODEC = simpleCodec(EnergyLinkBlock::new);
+
+	public EnergyLinkBlock(Properties properties) {
+		super(properties);
+	}
+
+	public EnergyLinkBlock() {
+		super();
+	}
+
+	@Override
+	protected MapCodec<? extends BaseEntityBlock> codec() {
+		return CODEC;
+	}
 
 	@Nullable
 	@Override

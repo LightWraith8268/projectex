@@ -38,8 +38,12 @@ import org.jetbrains.annotations.Nullable;
 
 public abstract class LinkBaseBlock extends BaseEntityBlock {
 
+	public LinkBaseBlock(BlockBehaviour.Properties properties) {
+		super(properties);
+	}
+
 	public LinkBaseBlock() {
-		super(BlockBehaviour.Properties.of()
+		this(BlockBehaviour.Properties.of()
 				.strength(5F)
 				.sound(SoundType.STONE)
 				.requiresCorrectToolForDrops());
