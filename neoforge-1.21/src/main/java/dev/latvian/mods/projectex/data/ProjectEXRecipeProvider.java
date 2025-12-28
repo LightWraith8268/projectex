@@ -82,28 +82,37 @@ public class ProjectEXRecipeProvider extends RecipeProvider {
 		}
 
 		// Magnum Star tier upgrades
+		// Note: First tier (Ein) is crafted from 4x ProjectE Klein Star Omega in a shapeless recipe
+		// This should be added via ProjectE integration later
 		Star prevStar = null;
 		for (Star star : Star.VALUES) {
 			if (prevStar != null) {
+				// 4x previous tier = 1x next tier
 				ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ProjectEXItems.MAGNUM_STAR.get(star).get())
 					.requires(ProjectEXItems.MAGNUM_STAR.get(prevStar).get())
-					.requires(ProjectEXItems.STAR.get(star).get())
+					.requires(ProjectEXItems.MAGNUM_STAR.get(prevStar).get())
+					.requires(ProjectEXItems.MAGNUM_STAR.get(prevStar).get())
+					.requires(ProjectEXItems.MAGNUM_STAR.get(prevStar).get())
 					.group("projectex:magnum_star")
-					.unlockedBy("has_star", has(ProjectEXItems.STAR.get(star).get()))
+					.unlockedBy("has_prev_star", has(ProjectEXItems.MAGNUM_STAR.get(prevStar).get()))
 					.save(output, ProjectEX.MOD_ID + ":magnum_star/" + star.name);
 			}
 			prevStar = star;
 		}
 
 		// Colossal Star tier upgrades
+		// Note: First tier (Ein) is crafted from 4x Magnum Star Omega in a shapeless recipe
 		prevStar = null;
 		for (Star star : Star.VALUES) {
 			if (prevStar != null) {
+				// 4x previous tier = 1x next tier
 				ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ProjectEXItems.COLOSSAL_STAR.get(star).get())
 					.requires(ProjectEXItems.COLOSSAL_STAR.get(prevStar).get())
-					.requires(ProjectEXItems.STAR.get(star).get())
+					.requires(ProjectEXItems.COLOSSAL_STAR.get(prevStar).get())
+					.requires(ProjectEXItems.COLOSSAL_STAR.get(prevStar).get())
+					.requires(ProjectEXItems.COLOSSAL_STAR.get(prevStar).get())
 					.group("projectex:colossal_star")
-					.unlockedBy("has_star", has(ProjectEXItems.STAR.get(star).get()))
+					.unlockedBy("has_prev_star", has(ProjectEXItems.COLOSSAL_STAR.get(prevStar).get()))
 					.save(output, ProjectEX.MOD_ID + ":colossal_star/" + star.name);
 			}
 			prevStar = star;

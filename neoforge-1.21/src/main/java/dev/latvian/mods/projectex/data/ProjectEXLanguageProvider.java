@@ -67,11 +67,6 @@ public class ProjectEXLanguageProvider extends LanguageProvider {
 		add(ProjectEXBlocks.STONE_TABLE.get(), "Stone Transmutation Table");
 		add(ProjectEXBlocks.ALCHEMY_TABLE.get(), "Alchemy Transmutation Table");
 
-		// Star items
-		for (Star star : Star.VALUES) {
-			add(ProjectEXItems.STAR.get(star).get(), star.displayName + " Star");
-		}
-
 		// Magnum Stars
 		for (Star star : Star.VALUES) {
 			add(ProjectEXItems.MAGNUM_STAR.get(star).get(), "Magnum Star " + star.displayName);

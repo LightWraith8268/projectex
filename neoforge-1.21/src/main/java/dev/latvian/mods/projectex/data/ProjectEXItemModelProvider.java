@@ -57,12 +57,6 @@ public class ProjectEXItemModelProvider extends ItemModelProvider {
 				"layer0", modLoc("item/matter/" + matter.name));
 		}
 
-		// Star items
-		for (Star star : Star.VALUES) {
-			singleTexture(star.name + "_star", mcLoc("item/generated"),
-				"layer0", modLoc("item/star/" + star.name));
-		}
-
 		// Magnum Stars (6 tiers)
 		for (int i = 0; i < 6; i++) {
 			singleTexture("magnum_star_" + Star.VALUES[i].name, mcLoc("item/generated"),
