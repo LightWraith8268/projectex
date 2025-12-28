@@ -1,0 +1,40 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="LGPL-3.0"
+
+[[mods]]
+modId="projectex_reforged"
+version="1.21.1-1.0.0"
+displayName="ProjectEX Reforged"
+description='''An unofficial extension mod for ProjectE. Originally by LatvianModder, ported to 1.21.1+ NeoForge.'''
+authors="LatvianModder (original), LightWraith8268 (1.21.1 port)"
+displayURL="https://github.com/LightWraith8268/projectex_reforged"
+logoFile="logo.png"
+
+[[dependencies.projectex_reforged]]
+    modId="neoforge"
+    type="required"
+    versionRange="[21.1,22)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.projectex_reforged]]
+    modId="minecraft"
+    type="required"
+    versionRange="[1.21.1,1.22)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.projectex_reforged]]
+    modId="projecte"
+    type="required"
+    versionRange="[1.1.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.projectex_reforged]]
+    modId="refinedstorage"
+    type="optional"
+    versionRange="[2.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
