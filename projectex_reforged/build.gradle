@@ -20,6 +20,8 @@ runs {
         systemProperty 'forge.logging.markers', 'REGISTRIES'
         systemProperty 'forge.logging.console.level', 'debug'
         modSource project.sourceSets.main
+        // Allow duplicate ASM modules to workaround ASM 9.5/9.7 conflict
+        jvmArgument '--add-opens=java.base/java.lang=ALL-UNNAMED'
     }
 
     client {
@@ -74,8 +76,10 @@ repositories {
 dependencies {
     implementation "net.neoforged:neoforge:${neoforge_version}"
 
-    // ProjectE - REQUIRED (using local JAR from integrations folder)
-    implementation files('../integrations/ProjectE-1.21.1-PE1.1.0.jar')
+    // ProjectE - REQUIRED (from ModMaven, exclude ASM to avoid conflict with NeoForge's ASM 9.7)
+    implementation("moze_intel:ProjectE:1.21.1-PE1.1.0") {
+        exclude group: 'org.ow2.asm'
+    }
 
     // Refined Storage - Optional integration (using local JAR from integrations folder)
     compileOnly files('../integrations/refinedstorage-neoforge-2.0.0.jar')
