@@ -45,9 +45,9 @@ public class ProjectEXRecipeProvider extends RecipeProvider {
 			if (prev != null) {
 				ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ProjectEXBlocks.COLLECTOR.get(matter).get())
 					.requires(ProjectEXBlocks.COLLECTOR.get(prev).get())
-					.requires(ProjectEXItems.MATTER.get(matter).get())
+					.requires(matter.getItem().get())  // Use getItem() which handles both matter items and reference items
 					.group("projectex:collector")
-					.unlockedBy("has_matter", has(ProjectEXItems.MATTER.get(matter).get()))
+					.unlockedBy("has_matter", has(matter.getItem().get()))
 					.save(output, ProjectEX.MOD_ID + ":collector/" + matter.name);
 			}
 			prev = matter;
@@ -59,9 +59,9 @@ public class ProjectEXRecipeProvider extends RecipeProvider {
 			if (prev != null) {
 				ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ProjectEXBlocks.POWER_FLOWER.get(matter).get())
 					.requires(ProjectEXBlocks.POWER_FLOWER.get(prev).get())
-					.requires(ProjectEXItems.MATTER.get(matter).get())
+					.requires(matter.getItem().get())  // Use getItem() which handles both matter items and reference items
 					.group("projectex:power_flower")
-					.unlockedBy("has_matter", has(ProjectEXItems.MATTER.get(matter).get()))
+					.unlockedBy("has_matter", has(matter.getItem().get()))
 					.save(output, ProjectEX.MOD_ID + ":power_flower/" + matter.name);
 			}
 			prev = matter;
@@ -73,9 +73,9 @@ public class ProjectEXRecipeProvider extends RecipeProvider {
 			if (prev != null) {
 				ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ProjectEXBlocks.RELAY.get(matter).get())
 					.requires(ProjectEXBlocks.RELAY.get(prev).get())
-					.requires(ProjectEXItems.MATTER.get(matter).get())
+					.requires(matter.getItem().get())  // Use getItem() which handles both matter items and reference items
 					.group("projectex:relay")
-					.unlockedBy("has_matter", has(ProjectEXItems.MATTER.get(matter).get()))
+					.unlockedBy("has_matter", has(matter.getItem().get()))
 					.save(output, ProjectEX.MOD_ID + ":relay/" + matter.name);
 			}
 			prev = matter;

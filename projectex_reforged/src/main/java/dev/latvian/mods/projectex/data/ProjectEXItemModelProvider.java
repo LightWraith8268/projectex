@@ -51,10 +51,12 @@ public class ProjectEXItemModelProvider extends ItemModelProvider {
 		withExistingParent("stone_table", modLoc("block/stone_table"));
 		withExistingParent("alchemy_table", modLoc("block/alchemy_table"));
 
-		// Matter items
+		// Matter items - only for tiers that have matter items
 		for (Matter matter : Matter.VALUES) {
-			singleTexture(matter.name + "_matter", mcLoc("item/generated"),
-				"layer0", modLoc("item/matter/" + matter.name));
+			if (matter.hasMatterItem) {
+				singleTexture(matter.name + "_matter", mcLoc("item/generated"),
+					"layer0", modLoc("item/matter/" + matter.name));
+			}
 		}
 
 		// Magnum Stars (6 tiers)

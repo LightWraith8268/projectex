@@ -67,10 +67,12 @@ public class ProjectEXBlockStateProvider extends BlockStateProvider {
 		simpleBlock(ProjectEXBlocks.COMPRESSED_REFINED_LINK.get(),
 			models().cubeAll("compressed_refined_link", modLoc("block/compressed_refined_link")));
 
-		// Tables - horizontal blocks
-		horizontalBlock(ProjectEXBlocks.STONE_TABLE.get(),
+		// Stone Table - directional block (FACING property with all 6 directions)
+		directionalBlock(ProjectEXBlocks.STONE_TABLE.get(),
 			models().withExistingParent("stone_table", modLoc("block/stone_table")));
-		horizontalBlock(ProjectEXBlocks.ALCHEMY_TABLE.get(),
+
+		// Alchemy Table - simple block (no directional properties)
+		simpleBlock(ProjectEXBlocks.ALCHEMY_TABLE.get(),
 			models().withExistingParent("alchemy_table", modLoc("block/alchemy_table")));
 	}
 

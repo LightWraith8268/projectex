@@ -37,9 +37,11 @@ public class ProjectEXLanguageProvider extends LanguageProvider {
 		// Creative tab
 		add("itemGroup." + ProjectEX.MOD_ID, "ProjectEX Reforged");
 
-		// Matter items
+		// Matter items - only for tiers that have matter items
 		for (Matter matter : Matter.VALUES) {
-			add(ProjectEXItems.MATTER.get(matter).get(), matter.displayName + " Matter");
+			if (matter.hasMatterItem) {
+				add(ProjectEXItems.MATTER.get(matter).get(), matter.displayName + " Matter");
+			}
 		}
 
 		// Collectors
