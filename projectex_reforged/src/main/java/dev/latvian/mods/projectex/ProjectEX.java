@@ -20,9 +20,11 @@
 package dev.latvian.mods.projectex;
 
 import dev.latvian.mods.projectex.block.ProjectEXBlocks;
+import dev.latvian.mods.projectex.block.entity.LinkBaseBlockEntity;
 import dev.latvian.mods.projectex.block.entity.ProjectEXBlockEntities;
 import dev.latvian.mods.projectex.item.ProjectEXItems;
 import dev.latvian.mods.projectex.menu.ProjectEXMenuTypes;
+import moze_intel.projecte.api.capabilities.PECapabilities;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -30,6 +32,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
@@ -63,5 +66,48 @@ public class ProjectEX {
 		ProjectEXBlockEntities.REGISTRY.register(modEventBus);
 		ProjectEXMenuTypes.REGISTRY.register(modEventBus);
 		CREATIVE_TABS.register(modEventBus);
+
+		// Register capability event handler
+		modEventBus.addListener(this::registerCapabilities);
+	}
+
+	private void registerCapabilities(RegisterCapabilitiesEvent event) {
+		// Register EMC Storage capability for all Link block entities
+		event.registerBlockEntity(
+			PECapabilities.EMC_STORAGE_CAPABILITY,
+			ProjectEXBlockEntities.PERSONAL_LINK.get(),
+			(blockEntity, side) -> blockEntity
+		);
+
+		event.registerBlockEntity(
+			PECapabilities.EMC_STORAGE_CAPABILITY,
+			ProjectEXBlockEntities.ENERGY_LINK.get(),
+			(blockEntity, side) -> blockEntity
+		);
+
+		event.registerBlockEntity(
+			PECapabilities.EMC_STORAGE_CAPABILITY,
+			ProjectEXBlockEntities.REFINED_LINK.get(),
+			(blockEntity, side) -> blockEntity
+		);
+
+		event.registerBlockEntity(
+			PECapabilities.EMC_STORAGE_CAPABILITY,
+			ProjectEXBlockEntities.COMPRESSED_REFINED_LINK.get(),
+			(blockEntity, side) -> blockEntity
+		);
+
+		// Register EMC Storage capability for Collectors and Relays
+		event.registerBlockEntity(
+			PECapabilities.EMC_STORAGE_CAPABILITY,
+			ProjectEXBlockEntities.COLLECTOR.get(),
+			(blockEntity, side) -> blockEntity
+		);
+
+		event.registerBlockEntity(
+			PECapabilities.EMC_STORAGE_CAPABILITY,
+			ProjectEXBlockEntities.RELAY.get(),
+			(blockEntity, side) -> blockEntity
+		);
 	}
 }
