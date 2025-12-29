@@ -19,8 +19,7 @@
 
 package dev.latvian.mods.projectex.item;
 
-import moze_intel.projecte.gameObjs.container.TransmutationContainer;
-import moze_intel.projecte.utils.text.PELang;
+import dev.latvian.mods.projectex.container.AlchemyTableMenu;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -66,12 +65,12 @@ public class ArcaneTabletItem extends Item {
 
 		@Override
 		public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
-			return new TransmutationContainer(windowId, playerInventory);
+			return new AlchemyTableMenu(windowId, playerInventory, hand);
 		}
 
 		@Override
 		public Component getDisplayName() {
-			return PELang.TRANSMUTATION_TRANSMUTE.translate();
+			return Component.translatable("container.projectex.arcane_tablet");
 		}
 	}
 }
