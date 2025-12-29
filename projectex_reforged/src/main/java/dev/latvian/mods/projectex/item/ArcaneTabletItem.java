@@ -44,7 +44,15 @@ public class ArcaneTabletItem extends Item {
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
-			serverPlayer.openMenu(new ContainerProvider(hand), buf -> buf.writeEnum(hand));
+			// Get the slot index of the hand holding this item
+			int selectedSlot = hand == InteractionHand.MAIN_HAND
+				? player.getInventory().selected
+				: -1;  // Off-hand doesn't have a hotbar slot
+
+			serverPlayer.openMenu(new ContainerProvider(hand, selectedSlot), buf -> {
+				buf.writeEnum(hand);
+				buf.writeInt(selectedSlot);
+			});
 		}
 		return InteractionResultHolder.success(player.getItemInHand(hand));
 	}
@@ -58,14 +66,17 @@ public class ArcaneTabletItem extends Item {
 
 	private static class ContainerProvider implements MenuProvider {
 		private final InteractionHand hand;
+		private final int selectedSlot;
 
-		private ContainerProvider(InteractionHand hand) {
+		private ContainerProvider(InteractionHand hand, int selectedSlot) {
 			this.hand = hand;
+			this.selectedSlot = selectedSlot;
 		}
 
 		@Override
 		public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
-			return new AlchemyTableMenu(windowId, playerInventory, hand);
+			// Pass the selected slot index to the menu
+			return new AlchemyTableMenu(windowId, playerInventory, hand, selectedSlot);
 		}
 
 		@Override

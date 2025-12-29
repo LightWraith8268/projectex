@@ -53,7 +53,9 @@ public class AlchemyTableEntity extends BlockEntity implements MenuProvider, IMe
 
 	@Override
 	public void writeClientSideData(AbstractContainerMenu menu, RegistryFriendlyByteBuf buffer) {
-		// Send hand to client for menu construction
+		// Send hand and selected slot to client for menu construction
+		// Block-based table uses MAIN_HAND with no selected slot (-1)
 		buffer.writeEnum(InteractionHand.MAIN_HAND);
+		buffer.writeInt(-1);  // -1 indicates no hand slot selected (block-based)
 	}
 }

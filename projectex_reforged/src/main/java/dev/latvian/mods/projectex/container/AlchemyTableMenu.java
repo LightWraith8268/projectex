@@ -75,9 +75,10 @@ public class AlchemyTableMenu extends TransmutationContainer {
 	 * Network constructor - called on client when opening GUI from packet
 	 */
 	public static AlchemyTableMenu fromNetwork(int windowId, Inventory playerInv, FriendlyByteBuf data) {
-		// Read hand from packet (main hand vs offhand)
+		// Read hand and selected slot from packet
 		InteractionHand hand = data.readEnum(InteractionHand.class);
-		return new AlchemyTableMenu(windowId, playerInv, hand);
+		int selectedSlot = data.readInt();
+		return new AlchemyTableMenu(windowId, playerInv, hand, selectedSlot);
 	}
 
 	/**
