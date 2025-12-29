@@ -95,18 +95,9 @@ public class AlchemyTableMenu extends TransmutationContainer {
 	}
 
 	/**
-	 * Constructor for block-based Alchemy Table
+	 * Constructor for block-based Alchemy Table (removed - use hand variant instead)
+	 * Block entities now use the same hand-based constructor as items.
 	 */
-	public AlchemyTableMenu(int windowId, Inventory playerInv) {
-		// Call parent TransmutationContainer constructor without hand
-		// This initializes the transmutation inventory and slots
-		super(windowId, playerInv);
-
-		this.player = playerInv.player;
-
-		// Add our custom slots for crafting and charging
-		initCustomSlots();
-	}
 
 	/**
 	 * Initialize custom slots for crafting grid, result, and Klein Star charging

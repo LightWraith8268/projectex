@@ -44,6 +44,7 @@ public class AlchemyTableEntity extends BlockEntity implements MenuProvider {
 	@Override
 	public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
 		// Create the Alchemy Table menu for the block-based variant
-		return new AlchemyTableMenu(containerId, playerInventory);
+		// Use MAIN_HAND variant with 0 param to avoid constructor mismatch
+		return new AlchemyTableMenu(containerId, playerInventory, net.minecraft.world.InteractionHand.MAIN_HAND);
 	}
 }
