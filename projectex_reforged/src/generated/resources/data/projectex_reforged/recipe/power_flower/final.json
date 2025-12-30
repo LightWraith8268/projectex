@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "projectex:power_flower",
+  "ingredients": [
+    {
+      "item": "projectex_reforged:fading_power_flower"
+    },
+    {
+      "item": "projectex_reforged:final_star_shard"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "projectex_reforged:final_power_flower"
+  }
+}

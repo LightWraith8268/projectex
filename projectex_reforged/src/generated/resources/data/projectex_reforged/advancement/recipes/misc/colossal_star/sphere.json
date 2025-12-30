@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_prev_star": {
+      "conditions": {
+        "items": [
+          {
+            "items": "projectex_reforged:colossal_star_vier"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "projectex_reforged:colossal_star/sphere"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_prev_star"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "projectex_reforged:colossal_star/sphere"
+    ]
+  }
+}

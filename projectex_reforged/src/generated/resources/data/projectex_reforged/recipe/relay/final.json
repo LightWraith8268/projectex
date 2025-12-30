@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "projectex:relay",
+  "ingredients": [
+    {
+      "item": "projectex_reforged:fading_relay"
+    },
+    {
+      "item": "projectex_reforged:final_star_shard"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "projectex_reforged:final_relay"
+  }
+}

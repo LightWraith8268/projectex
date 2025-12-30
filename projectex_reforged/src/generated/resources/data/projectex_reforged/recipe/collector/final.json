@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "projectex:collector",
+  "ingredients": [
+    {
+      "item": "projectex_reforged:fading_collector"
+    },
+    {
+      "item": "projectex_reforged:final_star_shard"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "projectex_reforged:final_collector"
+  }
+}

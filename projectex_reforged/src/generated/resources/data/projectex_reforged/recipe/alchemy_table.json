@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "projectex",
+  "key": {
+    "A": {
+      "item": "minecraft:ender_chest"
+    },
+    "D": {
+      "item": "minecraft:obsidian"
+    },
+    "M": {
+      "item": "minecraft:ender_chest"
+    },
+    "S": {
+      "item": "projectex_reforged:stone_table"
+    }
+  },
+  "pattern": [
+    "DMD",
+    "ASA",
+    "DMD"
+  ],
+  "result": {
+    "count": 1,
+    "id": "projectex_reforged:alchemy_table"
+  }
+}

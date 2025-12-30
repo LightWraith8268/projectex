@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "projectex:power_flower",
+  "ingredients": [
+    {
+      "item": "projectex_reforged:green_power_flower"
+    },
+    {
+      "item": "projectex_reforged:lime_matter"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "projectex_reforged:lime_power_flower"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "projectex",
+  "key": {
+    "A": {
+      "item": "projectex_reforged:alchemy_table"
+    },
+    "R": {
+      "item": "minecraft:nether_star"
+    },
+    "T": {
+      "item": "minecraft:ender_chest"
+    }
+  },
+  "pattern": [
+    "RAR",
+    "RTR",
+    "RRR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "projectex_reforged:arcane_tablet"
+  }
+}

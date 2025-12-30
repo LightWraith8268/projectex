@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "projectex:power_flower",
+  "ingredients": [
+    {
+      "item": "projectex_reforged:magenta_power_flower"
+    },
+    {
+      "item": "projectex_reforged:pink_matter"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "projectex_reforged:pink_power_flower"
+  }
+}

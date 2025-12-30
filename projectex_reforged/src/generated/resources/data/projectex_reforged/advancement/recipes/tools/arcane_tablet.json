@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_alchemy_table": {
+      "conditions": {
+        "items": [
+          {
+            "items": "projectex_reforged:alchemy_table"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "projectex_reforged:arcane_tablet"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_alchemy_table"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "projectex_reforged:arcane_tablet"
+    ]
+  }
+}

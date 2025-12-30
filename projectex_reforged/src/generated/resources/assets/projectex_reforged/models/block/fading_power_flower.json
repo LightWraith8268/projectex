@@ -1,0 +1,7 @@
+{
+  "parent": "projectex_reforged:block/power_flower",
+  "textures": {
+    "collector": "projectex_reforged:block/collector/fading",
+    "relay": "projectex_reforged:block/relay/fading"
+  }
+}

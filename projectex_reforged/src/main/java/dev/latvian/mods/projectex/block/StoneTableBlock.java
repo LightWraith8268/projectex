@@ -53,12 +53,12 @@ import java.util.List;
 
 public class StoneTableBlock extends Block {
 	public static final VoxelShape[] SHAPE = new VoxelShape[]{
-			box(0, 0, 0, 16, 4, 16),      // DOWN
-			box(0, 12, 0, 16, 16, 16),    // UP
-			box(0, 0, 0, 16, 16, 4),      // NORTH
-			box(0, 0, 12, 16, 16, 16),    // SOUTH
-			box(0, 0, 0, 4, 16, 16),      // WEST
-			box(12, 0, 0, 16, 16, 16)     // EAST
+			box(0, 12, 0, 16, 16, 16),    // DOWN (index 0) - top of block
+			box(0, 0, 0, 16, 4, 16),      // UP (index 1) - bottom of block
+			box(0, 0, 0, 16, 16, 4),      // NORTH (index 2)
+			box(0, 0, 12, 16, 16, 16),    // SOUTH (index 3)
+			box(0, 0, 0, 4, 16, 16),      // WEST (index 4)
+			box(12, 0, 0, 16, 16, 16)     // EAST (index 5)
 	};
 
 	public StoneTableBlock() {
