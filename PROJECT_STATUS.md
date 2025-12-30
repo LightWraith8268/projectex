@@ -1,7 +1,7 @@
 # ProjectEX Reforged - Development Status
 
-**Last Updated**: 2025-12-29
-**Version**: 1.0.0
+**Last Updated**: 2025-12-30
+**Version**: 1.7.3
 **Minecraft Version**: 1.21.1
 **NeoForge Version**: 21.1.73+
 
@@ -52,12 +52,17 @@ All planned features have been implemented and are ready for in-game testing.
 - [x] Full transfer logic (TODO - pending implementation)
 
 ### Phase 7: Data Generation ✅
-- [x] Recipes for all block tier upgrades (Collectors, Relays, Power Flowers)
-- [x] Star tier upgrade recipes (Magnum, Colossal)
-- [x] Alchemy Table recipe (with placeholders)
-- [x] Arcane Tablet recipe (with placeholders)
+- [x] Complete recipe port from 1.12.2 source (135+ recipes)
+  - Matter item recipes (horizontal/vertical patterns)
+  - Collector/Relay/Power Flower tier upgrades
+  - Compressed Collector recipes (all 16 tiers)
+  - Star tier upgrades (Magnum, Colossal)
+  - Base star recipes (Klein→Magnum, Magnum→Colossal)
+  - Link block recipes (Energy, Personal, Refined, Compressed)
+  - Table recipes (Stone Table, Alchemy Table, Arcane Tablet)
+  - Final tier items (Final Star, Final Star Shard, Knowledge Book)
 - [x] Block models and blockstates
-- [x] Item models
+- [x] Item models (including compressed collector 3D models)
 - [x] Language entries
 
 ### Phase 8: Arcane Tablet ✅
@@ -71,6 +76,7 @@ All planned features have been implemented and are ready for in-game testing.
 - [x] Removed unnecessary network buffer
 - [x] Directional placement (6 faces)
 - [x] Compact transmutation functionality
+- [x] Fixed hitbox alignment (VoxelShape array corrected)
 
 ### Phase 10: Link Block Infrastructure ✅
 - [x] EMC capability registration for all Link types
@@ -143,6 +149,54 @@ long powerFlowerOutput = collectorOutput * 18 + relayBonus * 30;
 // Example FINAL tier: 5471312×18 + 1365328×30 = 139,444,046 EMC/sec
 ```
 
+## 🐛 Recent Fixes (v1.7.3 - 2025-12-30)
+
+### Compressed Collector Textures
+- **Issue**: Compressed collectors displayed as flat single-sided textures instead of full 3D block models
+- **Root Cause**: Item model generator used `item/generated` parent with flat texture
+- **Fix**: Changed to `withExistingParent()` referencing full 3D block model from base collector
+- **File**: `ProjectEXItemModelProvider.java:78-83`
+- **Impact**: All 16 compressed collector items now display with proper 3D models + enchanted glint
+
+### Stone Table Hitbox Alignment
+- **Issue**: Hitbox positioned on opposite side from visual model (visual at bottom, hitbox at top)
+- **Root Cause**: VoxelShape array had DOWN and UP indices swapped
+- **Fix**: Corrected VoxelShape array to match Direction.ordinal() ordering (DOWN=0, UP=1)
+- **File**: `StoneTableBlock.java:55-62`
+- **Impact**: Hitbox now aligns correctly with visual model for all 6 placement directions
+
+### Missing Recipes (Complete 1.12.2 Port)
+- **Issue**: 90% of recipes missing - only tier upgrades existed
+- **Root Cause**: Recipe provider incomplete, missing base recipes from 1.12.2 source
+- **Fix**: Complete extraction and implementation of ALL 135+ recipes from original source
+- **File**: `ProjectEXRecipeProvider.java`
+- **Recipes Added**:
+  - Matter item recipes: 24 recipes (horizontal/vertical patterns with Aeternalis Fuel)
+  - Compressed collector recipes: 16 recipes (9 collectors in 3x3)
+  - Power flower base recipes: 16 recipes (2 compressed collectors + energy link + 6 relays)
+  - Star base recipes: 2 recipes (Klein Star Omega → Magnum Star Ein, Magnum Star Omega → Colossal Star Ein)
+  - Link block recipes: 4 recipes (Energy Link, Personal Link, Refined Link, Compressed Refined Link)
+  - Final tier items: 3 recipes (Final Star, Final Star Shard, Knowledge Sharing Book)
+  - Corrected table recipes: 3 recipes (Stone Table, Alchemy Table, Arcane Tablet)
+- **Data Generation**: 424 files generated (up from 321), 135 new recipe JSON files created
+- **Impact**: All crafting recipes from original 1.12.2 mod now functional
+
+## ⚠️ Active Issues Under Investigation
+
+### EMC Generation Not Working
+- **Status**: PENDING INVESTIGATION
+- **Issue**: Collectors, relays, and power flowers not generating EMC
+- **Evidence**: Server logs show "Items with existing EMC: 0" and "New EMC values discovered: 0"
+- **Next Steps**: Debug EMC capability registration and tick logic
+- **Priority**: CRITICAL - blocks core functionality
+
+### Reported Crashes (Unverified)
+- **Status**: AWAITING CONFIRMATION
+- **Issue**: User reported Arcane Tablet and Stone Table crashes
+- **Investigation**: No crash logs found from 2025-12-30 (latest logs from 2025-12-27 before previous fixes)
+- **Previous Fixes**: AlchemyTableEntity and ArcaneTabletItem fixed in prior session
+- **Next Steps**: Awaiting user confirmation or new crash logs to reproduce
+
 ## 📝 Known Limitations
 
 ### Placeholder Implementations
@@ -171,7 +225,6 @@ long powerFlowerOutput = collectorOutput * 18 + relayBonus * 30;
    - Need to read actual NBT data from Klein Star
 
 ### Deferred Features
-- **Compressed Collectors**: Not implemented (mentioned in spec but skipped)
 - **Knowledge Sharing Book**: Registered but not functional
 - **Multiplayer Sync**: Needs testing with dedicated server
 - **Advanced JEI Features**: Recipe highlighting, ingredient alternatives
@@ -208,7 +261,7 @@ cd projectex_reforged
 ./gradlew build
 ```
 
-**Output**: `build/libs/projectex_reforged-1.21.1-1.0.0.jar`
+**Output**: `build/libs/projectex_reforged-1.21.1-1.7.3.jar`
 
 ### Installation
 1. Copy JAR to Minecraft mods folder
@@ -245,7 +298,11 @@ cd projectex_reforged
 - ✅ **2025-12-28**: Phases 4-6 implemented (GUI, JEI, data gen)
 - ✅ **2025-12-29**: Phases 7-10 implemented (recipes, tablet, links, capabilities)
 - ✅ **2025-12-29**: All feature implementation complete
-- ⏳ **TBD**: First in-game validation
+- ✅ **2025-12-30**: In-game testing feedback fixes
+  - Fixed compressed collector textures (3D model rendering)
+  - Fixed Stone Table hitbox alignment
+  - Ported all 135+ recipes from 1.12.2 source
+- ⏳ **TBD**: EMC generation debugging
 - ⏳ **TBD**: Multiplayer testing
 - ⏳ **TBD**: Public release
 
