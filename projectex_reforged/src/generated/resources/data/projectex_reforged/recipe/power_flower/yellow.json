@@ -1,14 +1,22 @@
 {
-  "type": "minecraft:crafting_shapeless",
+  "type": "minecraft:crafting_shaped",
   "category": "misc",
   "group": "projectex:power_flower",
-  "ingredients": [
-    {
-      "item": "projectex_reforged:lime_power_flower"
+  "key": {
+    "C": {
+      "item": "projectex_reforged:yellow_compressed_collector"
     },
-    {
-      "item": "projectex_reforged:yellow_matter"
+    "L": {
+      "item": "projectex_reforged:energy_link"
+    },
+    "R": {
+      "item": "projectex_reforged:yellow_relay"
     }
+  },
+  "pattern": [
+    "CLC",
+    "RRR",
+    "RRR"
   ],
   "result": {
     "count": 1,

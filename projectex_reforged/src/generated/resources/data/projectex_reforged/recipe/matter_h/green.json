@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "projectex:matter/green",
+  "key": {
+    "F": {
+      "item": "projecte:aeternalis_fuel"
+    },
+    "M": {
+      "item": "projectex_reforged:cyan_matter"
+    }
+  },
+  "pattern": [
+    "FFF",
+    "MMM",
+    "FFF"
+  ],
+  "result": {
+    "count": 1,
+    "id": "projectex_reforged:green_matter"
+  }
+}

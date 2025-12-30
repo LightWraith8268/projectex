@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "projectex:compressed_collector",
+  "key": {
+    "C": {
+      "item": "projectex_reforged:fading_collector"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "CCC",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "projectex_reforged:fading_compressed_collector"
+  }
+}

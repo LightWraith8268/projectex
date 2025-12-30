@@ -3,20 +3,31 @@
   "category": "equipment",
   "group": "projectex",
   "key": {
-    "A": {
-      "item": "projectex_reforged:alchemy_table"
+    "C": {
+      "tag": "c:chests"
     },
-    "R": {
-      "item": "minecraft:nether_star"
+    "M": [
+      {
+        "item": "projectex_reforged:magenta_matter"
+      },
+      {
+        "item": "projecte:transmutation_tablet"
+      }
+    ],
+    "S": {
+      "item": "projectex_reforged:magnum_star_ein"
     },
     "T": {
-      "item": "minecraft:ender_chest"
+      "item": "projectex_reforged:stone_table"
+    },
+    "W": {
+      "item": "minecraft:crafting_table"
     }
   },
   "pattern": [
-    "RAR",
-    "RTR",
-    "RRR"
+    "TWT",
+    "MSM",
+    "TCT"
   ],
   "result": {
     "count": 1,

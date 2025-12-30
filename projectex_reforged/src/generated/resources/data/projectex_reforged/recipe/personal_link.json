@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "projectex:link",
+  "key": {
+    "B": {
+      "item": "projectex_reforged:energy_link"
+    },
+    "C": {
+      "item": "projecte:condenser_mk2"
+    },
+    "R": {
+      "item": "projecte:red_matter_block"
+    }
+  },
+  "pattern": [
+    "RBR",
+    "BCB",
+    "RBR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "projectex_reforged:personal_link"
+  }
+}

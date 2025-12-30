@@ -4,13 +4,13 @@
   "group": "projectex:power_flower",
   "key": {
     "C": {
-      "item": "projectex_reforged:fading_compressed_collector"
+      "item": "projectex_reforged:basic_compressed_collector"
     },
     "L": {
       "item": "projectex_reforged:energy_link"
     },
     "R": {
-      "item": "projectex_reforged:fading_relay"
+      "item": "projectex_reforged:basic_relay"
     }
   },
   "pattern": [
@@ -20,6 +20,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "projectex_reforged:fading_power_flower"
+    "id": "projectex_reforged:basic_power_flower"
   }
 }

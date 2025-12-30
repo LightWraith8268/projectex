@@ -3,23 +3,32 @@
   "category": "misc",
   "group": "projectex",
   "key": {
-    "A": {
-      "item": "minecraft:ender_chest"
+    "1": {
+      "item": "projecte:low_covalence_dust"
+    },
+    "2": {
+      "item": "projecte:medium_covalence_dust"
+    },
+    "3": {
+      "item": "projecte:high_covalence_dust"
     },
     "D": {
-      "item": "minecraft:obsidian"
+      "tag": "c:gems/diamond"
     },
-    "M": {
-      "item": "minecraft:ender_chest"
+    "L": {
+      "tag": "c:rods/wooden"
     },
     "S": {
       "item": "projectex_reforged:stone_table"
+    },
+    "T": {
+      "item": "minecraft:torch"
     }
   },
   "pattern": [
-    "DMD",
-    "ASA",
-    "DMD"
+    "123",
+    "TST",
+    "LDL"
   ],
   "result": {
     "count": 1,
