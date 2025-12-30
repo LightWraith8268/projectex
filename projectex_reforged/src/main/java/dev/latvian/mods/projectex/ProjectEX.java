@@ -98,6 +98,7 @@ public class ProjectEX {
 		);
 
 		// Register EMC Storage capability for Collectors and Relays
+		// Note: Power Flowers don't need EMC_STORAGE_CAPABILITY because they output directly to player
 		event.registerBlockEntity(
 			PECapabilities.EMC_STORAGE_CAPABILITY,
 			ProjectEXBlockEntities.COLLECTOR.get(),
