@@ -74,11 +74,15 @@ public class CollectorBlockEntity extends BlockEntity implements IEmcStorage {
 				List<IEmcStorage> temp = new ArrayList<>(1);
 
 				for (Direction direction : ProjectEX.DIRECTIONS) {
-					BlockEntity blockEntity = level.getBlockEntity(worldPosition.relative(direction));
+					BlockPos targetPos = worldPosition.relative(direction);
+					BlockEntity blockEntity = level.getBlockEntity(targetPos);
 
 					if (blockEntity != null) {
+						// Query capability at the target position with the direction FROM the target TO us
 						IEmcStorage storage = level.getCapability(PECapabilities.EMC_STORAGE_CAPABILITY,
-								blockEntity.getBlockPos(),
+								targetPos,
+								blockEntity.getBlockState(),
+								blockEntity,
 								direction.getOpposite());
 
 						if (storage != null && storage.insertEmc(1L, IEmcStorage.EmcAction.SIMULATE) > 0L) {
