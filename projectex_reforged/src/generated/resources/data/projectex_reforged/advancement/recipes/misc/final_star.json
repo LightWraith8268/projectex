@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_final_power_flower": {
+      "conditions": {
+        "items": [
+          {
+            "items": "projectex_reforged:final_power_flower"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "projectex_reforged:final_star"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_final_power_flower"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "projectex_reforged:final_star"
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "projectex_reforged:stone_table"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_transmutation_table": {
+      "conditions": {
+        "items": [
+          {
+            "items": "projecte:transmutation_table"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_transmutation_table"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "projectex_reforged:stone_table"
+    ]
+  }
+}

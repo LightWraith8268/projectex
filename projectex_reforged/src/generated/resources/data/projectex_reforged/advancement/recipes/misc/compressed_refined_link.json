@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_refined_link": {
+      "conditions": {
+        "items": [
+          {
+            "items": "projectex_reforged:refined_link"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "projectex_reforged:compressed_refined_link"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_refined_link"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "projectex_reforged:compressed_refined_link"
+    ]
+  }
+}

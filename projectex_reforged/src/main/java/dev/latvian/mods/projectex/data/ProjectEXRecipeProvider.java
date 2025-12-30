@@ -76,6 +76,29 @@ public class ProjectEXRecipeProvider extends RecipeProvider {
 			}
 		}
 
+		// ===== BASE RECIPES FOR BASIC TIER =====
+		// Basic Collector: 8 ProjectE Collector MK1 + 1 Obsidian (center)
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ProjectEXBlocks.COLLECTOR.get(Matter.BASIC).get())
+			.pattern("CCC")
+			.pattern("COC")
+			.pattern("CCC")
+			.define('C', PEBlocks.COLLECTOR.asItem())
+			.define('O', Items.OBSIDIAN)
+			.group("projectex:collector")
+			.unlockedBy("has_collector_mk1", has(PEBlocks.COLLECTOR.asItem()))
+			.save(output, ProjectEX.MOD_ID + ":collector/basic_base");
+
+		// Basic Relay: 8 ProjectE Relay MK1 + 1 Obsidian (center)
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ProjectEXBlocks.RELAY.get(Matter.BASIC).get())
+			.pattern("RRR")
+			.pattern("ROR")
+			.pattern("RRR")
+			.define('R', PEBlocks.RELAY.asItem())
+			.define('O', Items.OBSIDIAN)
+			.group("projectex:relay")
+			.unlockedBy("has_relay_mk1", has(PEBlocks.RELAY.asItem()))
+			.save(output, ProjectEX.MOD_ID + ":relay/basic_base");
+
 		// ===== COLLECTOR, RELAY, POWER FLOWER, COMPRESSED COLLECTOR RECIPES =====
 		for (Matter matter : Matter.VALUES) {
 			Item collector = ProjectEXBlocks.COLLECTOR.get(matter).get().asItem();

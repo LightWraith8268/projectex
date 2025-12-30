@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_matter": {
+    "has_compressed_collector": {
       "conditions": {
         "items": [
           {
-            "items": "projectex_reforged:blue_matter"
+            "items": "projectex_reforged:blue_compressed_collector"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_matter"
+      "has_compressed_collector"
     ]
   ],
   "rewards": {

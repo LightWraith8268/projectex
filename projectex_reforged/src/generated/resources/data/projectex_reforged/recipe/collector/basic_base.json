@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "projectex:collector",
+  "key": {
+    "C": {
+      "item": "projecte:collector_mk1"
+    },
+    "O": {
+      "item": "minecraft:obsidian"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "COC",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "projectex_reforged:basic_collector"
+  }
+}

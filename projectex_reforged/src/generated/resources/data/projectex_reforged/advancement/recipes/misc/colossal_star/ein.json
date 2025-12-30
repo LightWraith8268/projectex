@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_magnum_star_omega": {
+      "conditions": {
+        "items": [
+          {
+            "items": "projectex_reforged:magnum_star_omega"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "projectex_reforged:colossal_star/ein"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_magnum_star_omega"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "projectex_reforged:colossal_star/ein"
+    ]
+  }
+}

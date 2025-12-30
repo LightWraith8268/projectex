@@ -81,6 +81,7 @@ public class ProjectEXLanguageProvider extends LanguageProvider {
 
 		// Final Star
 		add(ProjectEXItems.FINAL_STAR.get(), "The Final Star");
+		add(ProjectEXItems.FINAL_STAR_SHARD.get(), "Final Star Shard");
 
 		// Utility items
 		add(ProjectEXItems.ARCANE_TABLET.get(), "Arcane Tablet");

@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_alchemy_table": {
+    "has_stone_table": {
       "conditions": {
         "items": [
           {
-            "items": "projectex_reforged:alchemy_table"
+            "items": "projectex_reforged:stone_table"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_alchemy_table"
+      "has_stone_table"
     ]
   ],
   "rewards": {
