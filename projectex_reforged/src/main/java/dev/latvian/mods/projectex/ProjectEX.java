@@ -20,6 +20,7 @@
 package dev.latvian.mods.projectex;
 
 import dev.latvian.mods.projectex.block.ProjectEXBlocks;
+import dev.latvian.mods.projectex.block.entity.EnergyLinkBlockEntity;
 import dev.latvian.mods.projectex.block.entity.LinkBaseBlockEntity;
 import dev.latvian.mods.projectex.block.entity.ProjectEXBlockEntities;
 import dev.latvian.mods.projectex.item.ProjectEXItems;
@@ -32,6 +33,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -109,6 +111,14 @@ public class ProjectEX {
 			PECapabilities.EMC_STORAGE_CAPABILITY,
 			ProjectEXBlockEntities.RELAY.get(),
 			(blockEntity, side) -> blockEntity
+		);
+
+		// Register Forge Energy capability for Energy Link
+		// Allows Energy Link to provide FE to adjacent energy consumers
+		event.registerBlockEntity(
+			Capabilities.EnergyStorage.BLOCK,
+			ProjectEXBlockEntities.ENERGY_LINK.get(),
+			(blockEntity, side) -> blockEntity.getEnergyStorage(side)
 		);
 	}
 }
