@@ -19,7 +19,7 @@
 
 package dev.latvian.mods.projectex.block;
 
-import moze_intel.projecte.gameObjs.container.TransmutationContainer;
+import moze_intel.projecte.gameObjs.registries.PEContainerTypes;
 import moze_intel.projecte.utils.text.PELang;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -27,10 +27,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -47,7 +45,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -88,7 +85,11 @@ public class StoneTableBlock extends Block {
 	@Override
 	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
 		if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
-			serverPlayer.openMenu(new ContainerProvider());
+			// Use ProjectE's registered transmutation container via SimpleMenuProvider
+			serverPlayer.openMenu(new SimpleMenuProvider(
+					(windowId, playerInventory, p) -> PEContainerTypes.TRANSMUTATION_CONTAINER.get().create(windowId, playerInventory),
+					PELang.TRANSMUTATION_TRANSMUTE.translate()
+			));
 		}
 		return InteractionResult.SUCCESS;
 	}
@@ -103,18 +104,5 @@ public class StoneTableBlock extends Block {
 	@Override
 	public RenderShape getRenderShape(BlockState state) {
 		return RenderShape.MODEL;
-	}
-
-	private static class ContainerProvider implements MenuProvider {
-		@Override
-		public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
-			// Uses ProjectE's transmutation container
-			return new TransmutationContainer(windowId, playerInventory);
-		}
-
-		@Override
-		public Component getDisplayName() {
-			return PELang.TRANSMUTATION_TRANSMUTE.translate();
-		}
 	}
 }
