@@ -77,10 +77,16 @@ public class ProjectEXBlockStateProvider extends BlockStateProvider {
 		// Link blocks
 		simpleBlock(ProjectEXBlocks.PERSONAL_LINK.get(),
 			models().cubeAll("personal_link", modLoc("block/personal_link")));
-		simpleBlock(ProjectEXBlocks.REFINED_LINK.get(),
-			models().cubeAll("refined_link", modLoc("block/refined_link")));
-		simpleBlock(ProjectEXBlocks.COMPRESSED_REFINED_LINK.get(),
-			models().cubeAll("compressed_refined_link", modLoc("block/compressed_refined_link")));
+
+		// Only generate block states for Refined Links if storage mod is loaded
+		if (ProjectEXBlocks.REFINED_LINK != null) {
+			simpleBlock(ProjectEXBlocks.REFINED_LINK.get(),
+				models().cubeAll("refined_link", modLoc("block/refined_link")));
+		}
+		if (ProjectEXBlocks.COMPRESSED_REFINED_LINK != null) {
+			simpleBlock(ProjectEXBlocks.COMPRESSED_REFINED_LINK.get(),
+				models().cubeAll("compressed_refined_link", modLoc("block/compressed_refined_link")));
+		}
 
 		// Stone Table - directional block (FACING property with all 6 directions)
 		directionalBlock(ProjectEXBlocks.STONE_TABLE.get(),

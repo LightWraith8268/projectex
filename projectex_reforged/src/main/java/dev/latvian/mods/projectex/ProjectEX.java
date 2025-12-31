@@ -87,17 +87,22 @@ public class ProjectEX {
 			(blockEntity, side) -> blockEntity
 		);
 
-		event.registerBlockEntity(
-			PECapabilities.EMC_STORAGE_CAPABILITY,
-			ProjectEXBlockEntities.REFINED_LINK.get(),
-			(blockEntity, side) -> blockEntity
-		);
+		// Only register Refined Link capabilities if storage mod is loaded
+		if (ProjectEXBlockEntities.REFINED_LINK != null) {
+			event.registerBlockEntity(
+				PECapabilities.EMC_STORAGE_CAPABILITY,
+				ProjectEXBlockEntities.REFINED_LINK.get(),
+				(blockEntity, side) -> blockEntity
+			);
+		}
 
-		event.registerBlockEntity(
-			PECapabilities.EMC_STORAGE_CAPABILITY,
-			ProjectEXBlockEntities.COMPRESSED_REFINED_LINK.get(),
-			(blockEntity, side) -> blockEntity
-		);
+		if (ProjectEXBlockEntities.COMPRESSED_REFINED_LINK != null) {
+			event.registerBlockEntity(
+				PECapabilities.EMC_STORAGE_CAPABILITY,
+				ProjectEXBlockEntities.COMPRESSED_REFINED_LINK.get(),
+				(blockEntity, side) -> blockEntity
+			);
+		}
 
 		// Register EMC Storage capability for Collectors and Relays
 		// Note: Power Flowers don't need EMC_STORAGE_CAPABILITY because they output directly to player
@@ -113,26 +118,19 @@ public class ProjectEX {
 			(blockEntity, side) -> blockEntity
 		);
 
-		// Register Forge Energy capability for Energy Link
-		// Allows Energy Link to provide FE to adjacent energy consumers
+		// Register Forge Energy capability for Energy Links (all tiers)
+		// Allows Energy Links to provide FE to adjacent energy consumers
 		event.registerBlockEntity(
 			Capabilities.EnergyStorage.BLOCK,
 			ProjectEXBlockEntities.ENERGY_LINK.get(),
 			(blockEntity, side) -> blockEntity.getEnergyStorage(side)
 		);
 
-		// Register Forge Energy capability for Compressed Energy Link
-		// 100x faster EMC↔FE conversion for high-throughput systems
-		event.registerBlockEntity(
-			Capabilities.EnergyStorage.BLOCK,
-			ProjectEXBlockEntities.COMPRESSED_ENERGY_LINK.get(),
-			(blockEntity, side) -> blockEntity.getEnergyStorage(side)
-		);
-
-		// Register EMC Storage capability for Compressed Energy Link
+		// Register EMC Storage capability for Energy Links (all tiers)
+		// Allows Energy Links to store and transfer EMC
 		event.registerBlockEntity(
 			PECapabilities.EMC_STORAGE_CAPABILITY,
-			ProjectEXBlockEntities.COMPRESSED_ENERGY_LINK.get(),
+			ProjectEXBlockEntities.ENERGY_LINK.get(),
 			(blockEntity, side) -> blockEntity
 		);
 	}

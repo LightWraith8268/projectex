@@ -68,8 +68,14 @@ public class ProjectEXLootTableProvider extends BlockLootSubProvider {
 
 		// Link blocks
 		dropSelf(ProjectEXBlocks.PERSONAL_LINK.get());
-		dropSelf(ProjectEXBlocks.REFINED_LINK.get());
-		dropSelf(ProjectEXBlocks.COMPRESSED_REFINED_LINK.get());
+
+		// Only generate loot tables for Refined Links if storage mod is loaded
+		if (ProjectEXBlocks.REFINED_LINK != null) {
+			dropSelf(ProjectEXBlocks.REFINED_LINK.get());
+		}
+		if (ProjectEXBlocks.COMPRESSED_REFINED_LINK != null) {
+			dropSelf(ProjectEXBlocks.COMPRESSED_REFINED_LINK.get());
+		}
 
 		// Tables
 		dropSelf(ProjectEXBlocks.STONE_TABLE.get());
@@ -96,8 +102,14 @@ public class ProjectEXLootTableProvider extends BlockLootSubProvider {
 
 		// Link blocks
 		blocks.add(ProjectEXBlocks.PERSONAL_LINK.get());
-		blocks.add(ProjectEXBlocks.REFINED_LINK.get());
-		blocks.add(ProjectEXBlocks.COMPRESSED_REFINED_LINK.get());
+
+		// Only include Refined Links if storage mod is loaded
+		if (ProjectEXBlocks.REFINED_LINK != null) {
+			blocks.add(ProjectEXBlocks.REFINED_LINK.get());
+		}
+		if (ProjectEXBlocks.COMPRESSED_REFINED_LINK != null) {
+			blocks.add(ProjectEXBlocks.COMPRESSED_REFINED_LINK.get());
+		}
 
 		// Tables
 		blocks.add(ProjectEXBlocks.STONE_TABLE.get());

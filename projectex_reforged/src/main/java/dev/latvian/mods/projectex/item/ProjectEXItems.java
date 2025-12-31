@@ -4,6 +4,7 @@ import dev.latvian.mods.projectex.Matter;
 import dev.latvian.mods.projectex.ProjectEX;
 import dev.latvian.mods.projectex.Star;
 import dev.latvian.mods.projectex.block.ProjectEXBlocks;
+import dev.latvian.mods.projectex.integration.IntegrationHelper;
 import net.minecraft.Util;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -37,11 +38,19 @@ public class ProjectEXItems {
 	public static final DeferredItem<BlockItem> PERSONAL_LINK =
 			blockItem("personal_link", ProjectEXBlocks.PERSONAL_LINK);
 
-	public static final DeferredItem<BlockItem> REFINED_LINK =
-			blockItem("refined_link", ProjectEXBlocks.REFINED_LINK);
+	// Refined Link items - ONLY register if RS2 or AE2 is present
+	public static final DeferredItem<BlockItem> REFINED_LINK;
+	public static final DeferredItem<BlockItem> COMPRESSED_REFINED_LINK;
 
-	public static final DeferredItem<BlockItem> COMPRESSED_REFINED_LINK =
-			blockItem("compressed_refined_link", ProjectEXBlocks.COMPRESSED_REFINED_LINK);
+	static {
+		if (IntegrationHelper.isAnyStorageModLoaded()) {
+			REFINED_LINK = blockItem("refined_link", ProjectEXBlocks.REFINED_LINK);
+			COMPRESSED_REFINED_LINK = blockItem("compressed_refined_link", ProjectEXBlocks.COMPRESSED_REFINED_LINK);
+		} else {
+			REFINED_LINK = null;
+			COMPRESSED_REFINED_LINK = null;
+		}
+	}
 
 	// Matter-Tiered Block Items
 	public static final Map<Matter, DeferredItem<BlockItem>> COLLECTOR =

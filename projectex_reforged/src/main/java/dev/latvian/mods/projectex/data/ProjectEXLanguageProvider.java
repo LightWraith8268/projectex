@@ -74,8 +74,14 @@ public class ProjectEXLanguageProvider extends LanguageProvider {
 
 		// Link blocks
 		add(ProjectEXBlocks.PERSONAL_LINK.get(), "Personal Link");
-		add(ProjectEXBlocks.REFINED_LINK.get(), "Refined Link");
-		add(ProjectEXBlocks.COMPRESSED_REFINED_LINK.get(), "Compressed Refined Link");
+
+		// Only add translations for Refined Links if storage mod is loaded
+		if (ProjectEXBlocks.REFINED_LINK != null) {
+			add(ProjectEXBlocks.REFINED_LINK.get(), "Refined Link");
+		}
+		if (ProjectEXBlocks.COMPRESSED_REFINED_LINK != null) {
+			add(ProjectEXBlocks.COMPRESSED_REFINED_LINK.get(), "Compressed Refined Link");
+		}
 
 		// Tables
 		add(ProjectEXBlocks.STONE_TABLE.get(), "Stone Transmutation Table");

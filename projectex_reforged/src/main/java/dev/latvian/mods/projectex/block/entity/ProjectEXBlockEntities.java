@@ -2,6 +2,7 @@ package dev.latvian.mods.projectex.block.entity;
 
 import dev.latvian.mods.projectex.ProjectEX;
 import dev.latvian.mods.projectex.block.ProjectEXBlocks;
+import dev.latvian.mods.projectex.integration.IntegrationHelper;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -16,27 +17,33 @@ public class ProjectEXBlockEntities {
 	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EnergyLinkBlockEntity>> ENERGY_LINK =
 			REGISTRY.register("energy_link", () ->
 					BlockEntityType.Builder.of(EnergyLinkBlockEntity::new,
-							ProjectEXBlocks.ENERGY_LINK.get()).build(null));
-
-	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CompressedEnergyLinkBlockEntity>> COMPRESSED_ENERGY_LINK =
-			REGISTRY.register("compressed_energy_link", () ->
-					BlockEntityType.Builder.of(CompressedEnergyLinkBlockEntity::new,
-							ProjectEXBlocks.COMPRESSED_ENERGY_LINK.get()).build(null));
+							ProjectEXBlocks.ENERGY_LINK.values().stream()
+									.map(DeferredHolder::get)
+									.toArray(Block[]::new)).build(null));
 
 	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PersonalLinkBlockEntity>> PERSONAL_LINK =
 			REGISTRY.register("personal_link", () ->
 					BlockEntityType.Builder.of(PersonalLinkBlockEntity::new,
 							ProjectEXBlocks.PERSONAL_LINK.get()).build(null));
 
-	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RefinedLinkBlockEntity>> REFINED_LINK =
-			REGISTRY.register("refined_link", () ->
+	// Refined Link block entities - ONLY register if RS2 or AE2 is present
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RefinedLinkBlockEntity>> REFINED_LINK;
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CompressedRefinedLinkBlockEntity>> COMPRESSED_REFINED_LINK;
+
+	static {
+		if (IntegrationHelper.isAnyStorageModLoaded()) {
+			REFINED_LINK = REGISTRY.register("refined_link", () ->
 					BlockEntityType.Builder.of(RefinedLinkBlockEntity::new,
 							ProjectEXBlocks.REFINED_LINK.get()).build(null));
 
-	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CompressedRefinedLinkBlockEntity>> COMPRESSED_REFINED_LINK =
-			REGISTRY.register("compressed_refined_link", () ->
+			COMPRESSED_REFINED_LINK = REGISTRY.register("compressed_refined_link", () ->
 					BlockEntityType.Builder.of(CompressedRefinedLinkBlockEntity::new,
 							ProjectEXBlocks.COMPRESSED_REFINED_LINK.get()).build(null));
+		} else {
+			REFINED_LINK = null;
+			COMPRESSED_REFINED_LINK = null;
+		}
+	}
 
 	// Matter-Tiered Block Entities (multiple blocks per type)
 	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CollectorBlockEntity>> COLLECTOR =

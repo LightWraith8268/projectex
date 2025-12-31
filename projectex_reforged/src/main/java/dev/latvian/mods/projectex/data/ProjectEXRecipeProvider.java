@@ -347,24 +347,29 @@ public class ProjectEXRecipeProvider extends RecipeProvider {
 			.unlockedBy("has_energy_link", has(ProjectEXBlocks.ENERGY_LINK.get(Matter.BASIC).get()))
 			.save(output);
 
-		// Refined Link: 9 personal links in 3x3
-		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ProjectEXBlocks.REFINED_LINK.get())
-			.pattern("LLL")
-			.pattern("LLL")
-			.pattern("LLL")
-			.define('L', ProjectEXBlocks.PERSONAL_LINK.get())
-			.group("projectex:link")
-			.unlockedBy("has_personal_link", has(ProjectEXBlocks.PERSONAL_LINK.get()))
-			.save(output);
+		// Only generate Refined Link recipes if storage mod is loaded
+		if (ProjectEXBlocks.REFINED_LINK != null) {
+			// Refined Link: 9 personal links in 3x3
+			ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ProjectEXBlocks.REFINED_LINK.get())
+				.pattern("LLL")
+				.pattern("LLL")
+				.pattern("LLL")
+				.define('L', ProjectEXBlocks.PERSONAL_LINK.get())
+				.group("projectex:link")
+				.unlockedBy("has_personal_link", has(ProjectEXBlocks.PERSONAL_LINK.get()))
+				.save(output);
+		}
 
-		// Compressed Refined Link: 6 refined links in 2x3
-		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ProjectEXBlocks.COMPRESSED_REFINED_LINK.get())
-			.pattern("LLL")
-			.pattern("LLL")
-			.define('L', ProjectEXBlocks.REFINED_LINK.get())
-			.group("projectex:link")
-			.unlockedBy("has_refined_link", has(ProjectEXBlocks.REFINED_LINK.get()))
-			.save(output);
+		if (ProjectEXBlocks.COMPRESSED_REFINED_LINK != null) {
+			// Compressed Refined Link: 6 refined links in 2x3
+			ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ProjectEXBlocks.COMPRESSED_REFINED_LINK.get())
+				.pattern("LLL")
+				.pattern("LLL")
+				.define('L', ProjectEXBlocks.REFINED_LINK.get())
+				.group("projectex:link")
+				.unlockedBy("has_refined_link", has(ProjectEXBlocks.REFINED_LINK.get()))
+				.save(output);
+		}
 
 		// ===== FINAL TIER ITEMS =====
 		// Final Star: 8 final power flowers + dragon egg
