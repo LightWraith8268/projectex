@@ -111,8 +111,8 @@ public class ProjectEXLanguageProvider extends LanguageProvider {
 		// Tooltips - Link Blocks
 		add("block.projectex.personal_link.tooltip", "Transfers EMC to owner's personal EMC");
 		add("block.projectex.energy_link.tooltip", "Bidirectional EMC ↔ FE conversion");
-		add("block.projectex.refined_link.tooltip", "Provides EMC to Refined Storage network");
-		add("block.projectex.compressed_refined_link.tooltip", "High-capacity Refined Storage EMC link");
+		add("block.projectex.refined_link.tooltip", "Provides EMC to Refined Storage/AE2 network");
+		add("block.projectex.compressed_refined_link.tooltip", "High-capacity Refined Storage/AE2 EMC link");
 
 		// Tooltips - Tables
 		add("block.projectex.stone_table.tooltip", "Compact transmutation table");

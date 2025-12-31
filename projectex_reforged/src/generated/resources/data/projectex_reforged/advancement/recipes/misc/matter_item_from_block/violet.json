@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_matter_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "projectex_reforged:violet_matter_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "projectex_reforged:matter_item_from_block/violet"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_matter_block"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "projectex_reforged:matter_item_from_block/violet"
+    ]
+  }
+}

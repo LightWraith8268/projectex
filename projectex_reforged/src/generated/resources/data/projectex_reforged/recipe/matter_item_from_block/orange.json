@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "projectex:matter_item_from_block",
+  "ingredients": [
+    {
+      "item": "projectex_reforged:orange_matter_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "projectex_reforged:orange_matter"
+  }
+}

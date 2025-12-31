@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "projectex:matter_block",
+  "key": {
+    "M": {
+      "item": "projectex_reforged:orange_matter"
+    }
+  },
+  "pattern": [
+    "MMM",
+    "MMM",
+    "MMM"
+  ],
+  "result": {
+    "count": 1,
+    "id": "projectex_reforged:orange_matter_block"
+  }
+}

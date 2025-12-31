@@ -76,6 +76,33 @@ public class ProjectEXRecipeProvider extends RecipeProvider {
 			}
 		}
 
+		// ===== MATTER BLOCK RECIPES =====
+		// 9 matter items -> 1 matter block (storage)
+		// 1 matter block -> 9 matter items (unpacking)
+		for (Matter matter : Matter.VALUES) {
+			if (matter.hasMatterItem) {
+				Item matterItem = matter.getItem().get();
+				Item matterBlock = ProjectEXBlocks.MATTER_BLOCK.get(matter).get().asItem();
+
+				// Crafting: 9 matter items -> 1 matter block
+				ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, matterBlock)
+					.pattern("MMM")
+					.pattern("MMM")
+					.pattern("MMM")
+					.define('M', matterItem)
+					.group("projectex:matter_block")
+					.unlockedBy("has_matter_item", has(matterItem))
+					.save(output, ProjectEX.MOD_ID + ":matter_block/" + matter.name);
+
+				// Unpacking: 1 matter block -> 9 matter items
+				ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, matterItem, 9)
+					.requires(matterBlock)
+					.group("projectex:matter_item_from_block")
+					.unlockedBy("has_matter_block", has(matterBlock))
+					.save(output, ProjectEX.MOD_ID + ":matter_item_from_block/" + matter.name);
+			}
+		}
+
 		// ===== BASE RECIPES FOR BASIC TIER =====
 		// Basic Collector: 8 ProjectE Collector MK1 + 1 Obsidian (center)
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ProjectEXBlocks.COLLECTOR.get(Matter.BASIC).get())
