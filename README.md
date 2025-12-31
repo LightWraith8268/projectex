@@ -174,9 +174,9 @@ This is a port project. Major features should remain consistent with the origina
 
 ## Current Port Status
 
-**Version:** 1.7.3
+**Version:** 1.8.1-dev
 **Status:** Feature Complete - In-Game Testing Phase
-**Last Updated:** 2025-12-30
+**Last Updated:** 2025-12-31
 
 ### ✅ Completed Implementation (All Phases)
 
@@ -244,22 +244,25 @@ This is a port project. Major features should remain consistent with the origina
 
 **Build System:**
 - Builds successfully with Java 21
-- Output JAR: `projectex_reforged-1.21.1-1.7.3.jar`
+- Output JAR: `projectex_reforged-1.21.1-1.8.1-dev.jar`
 - Deployed to test environment
 
-### 🐛 Recent Fixes (v1.7.3)
+### 🐛 Recent Fixes
 
-**Compressed Collector Textures**
-- Fixed flat texture rendering → now uses full 3D block models
-- File: `ProjectEXItemModelProvider.java:78-83`
+**v1.8.1-dev (2025-12-31)**
+- Klein Star charge bar now shows actual EMC percentage (was hardcoded 50%)
+- Added IItemEmcHolder interface integration for charge calculation
+- File: `AlchemyTableScreen.java:202-238`
 
-**Stone Table Hitbox Alignment**
-- Fixed misaligned hitbox (visual vs collision)
-- File: `StoneTableBlock.java:55-62`
+**v1.8.0-dev (2025-12-30)**
+- JEI recipe transfer implementation requirements documented
+- Added comprehensive packet system and server-side logic documentation
+- File: `AlchemyTableRecipeTransferHandler.java:101-170`
 
-**Complete Recipe Port**
-- Ported ALL 135+ recipes from 1.12.2 source
-- File: `ProjectEXRecipeProvider.java`
+**v1.7.3 (2025-12-30)**
+- Compressed Collector Textures: Fixed flat rendering → 3D models
+- Stone Table Hitbox: Fixed misaligned hitbox (visual vs collision)
+- Complete Recipe Port: ALL 135+ recipes from 1.12.2 source
 - Data generation: 424 files (up from 321)
 
 ### ⚠️ Active Issues
@@ -279,8 +282,7 @@ This is a port project. Major features should remain consistent with the origina
 **Placeholder Implementations:**
 1. Energy Link: Requires FE capability implementation
 2. Refined Storage Links: Require RS 2.0.0 API integration
-3. JEI Recipe Transfer: Validation works, actual transfer pending
-4. Klein Star Charge Bar: Shows fixed 50% charge (needs NBT reading)
+3. JEI Recipe Transfer: Documented (needs packet system + JEI dev environment)
 
 **Deferred Features:**
 - Knowledge Sharing Book: Registered but not functional
@@ -337,5 +339,5 @@ For general ProjectEX features/bugs, refer to the original repository.
 ---
 
 **Port Status:** Feature Complete - EMC Generation Debug Phase
-**Version:** 1.7.3
-**Last Build:** 2025-12-30
+**Version:** 1.8.1-dev
+**Last Build:** 2025-12-31
