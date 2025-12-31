@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "projectex_reforged:pink_collector"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "projectex_reforged:blocks/pink_collector"
+}
