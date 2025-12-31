@@ -29,15 +29,20 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigInteger;
 import java.util.UUID;
 
 public class PowerFlowerBlockEntity extends BlockEntity {
+	private static final Logger LOGGER = LoggerFactory.getLogger(PowerFlowerBlockEntity.class);
+
 	public UUID owner = Util.NIL_UUID;
 	public String ownerName = "";
 	public int tick = 0;
 	public BigInteger storedEMC = BigInteger.ZERO;
+	private int debugLogCounter = 0; // Log every 100 ticks (5 seconds) to avoid spam
 
 	public PowerFlowerBlockEntity(BlockPos pos, BlockState state) {
 		super(ProjectEXBlockEntities.POWER_FLOWER.get(), pos, state);
@@ -68,6 +73,7 @@ public class PowerFlowerBlockEntity extends BlockEntity {
 		}
 
 		tick++;
+		debugLogCounter++;
 
 		if (tick >= 20) {
 			tick = 0;
@@ -77,23 +83,67 @@ public class PowerFlowerBlockEntity extends BlockEntity {
 			if (state.getBlock() instanceof PowerFlowerBlock powerFlower) {
 				long gen = powerFlower.matter.getPowerFlowerOutput();
 
+				// Log every 100 ticks (5 seconds)
+				if (debugLogCounter >= 100) {
+					debugLogCounter = 0;
+					LOGGER.info("[PowerFlowerBlockEntity] @ {} - Tier: {}, Owner: {} ({}), Generating: {} EMC/s, Stored: {} EMC",
+							worldPosition,
+							powerFlower.matter.name,
+							ownerName,
+							owner,
+							gen,
+							storedEMC);
+				}
+
 				ServerPlayer player = level.getServer().getPlayerList().getPlayer(owner);
 
 				if (player != null) {
 					IKnowledgeProvider provider = player.getCapability(PECapabilities.KNOWLEDGE_CAPABILITY);
 
 					if (provider != null) {
+						BigInteger previousEmc = provider.getEmc();
 						provider.setEmc(provider.getEmc().add(BigInteger.valueOf(gen)));
+
+						if (debugLogCounter == 0) {
+							LOGGER.info("[PowerFlowerBlockEntity] @ {} - Successfully added {} EMC to player {}'s knowledge (was: {}, now: {})",
+									worldPosition,
+									gen,
+									ownerName,
+									previousEmc,
+									provider.getEmc());
+						}
 
 						if (!storedEMC.equals(BigInteger.ZERO)) {
 							provider.setEmc(provider.getEmc().add(storedEMC));
+							if (debugLogCounter == 0) {
+								LOGGER.info("[PowerFlowerBlockEntity] @ {} - Released {} stored EMC to player {}",
+										worldPosition,
+										storedEMC,
+										ownerName);
+							}
 							storedEMC = BigInteger.ZERO;
 							setChanged();
 						}
 					} else {
 						storedEMC = storedEMC.add(BigInteger.valueOf(gen));
+						if (debugLogCounter == 0) {
+							LOGGER.warn("[PowerFlowerBlockEntity] @ {} - Player {} online but has NO KNOWLEDGE CAPABILITY! Storing EMC: {}",
+									worldPosition,
+									ownerName,
+									storedEMC);
+						}
 						setChanged();
 					}
+				} else {
+					storedEMC = storedEMC.add(BigInteger.valueOf(gen));
+					if (debugLogCounter == 0) {
+						LOGGER.warn("[PowerFlowerBlockEntity] @ {} - Owner {} (UUID: {}) NOT ONLINE! Storing EMC: {}",
+								worldPosition,
+								ownerName,
+								owner,
+								storedEMC);
+					}
+					setChanged();
 				}
 			}
 		}

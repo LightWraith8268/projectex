@@ -1,4 +1,4 @@
-// 1.21.1	2025-12-30T16:52:24.3377237	Item Models: projectex_reforged
+// 1.21.1	2025-12-30T19:42:14.9806541	Item Models: projectex_reforged
 d602fa22e8dd7f106c4c630e87c9ef638fdca99f assets/projectex_reforged/models/item/alchemy_table.json
 0248032bdae8ccfa6579b34bb433b38da5a65e14 assets/projectex_reforged/models/item/arcane_tablet.json
 0a50c95006733f6b05d2a4983a196dfc50d5c2f8 assets/projectex_reforged/models/item/basic_collector.json
@@ -31,7 +31,6 @@ bedbe8644de9e06f38cfd5b99da34a5f38117af0 assets/projectex_reforged/models/item/c
 cc1bb9b89a17c861444803d6620d70fa66c2fc6d assets/projectex_reforged/models/item/dark_collector.json
 cc1bb9b89a17c861444803d6620d70fa66c2fc6d assets/projectex_reforged/models/item/dark_compressed_collector.json
 3538fdd22cb2d085712401cae5e7dffda0871715 assets/projectex_reforged/models/item/dark_energy_link.json
-a7ec9bfd763130356e92df6e6c72f0a4e6898fdc assets/projectex_reforged/models/item/dark_matter_block.json
 2772301ed7ad2ae4cb96994143e86ac979c1d77f assets/projectex_reforged/models/item/dark_power_flower.json
 31dfa8d18a7ec5f9558817de9ac83c3e7a5f8519 assets/projectex_reforged/models/item/dark_relay.json
 92db07219963d32110cac775cfed46f71ecd3b07 assets/projectex_reforged/models/item/fading_collector.json
@@ -102,7 +101,6 @@ f37be8e70573399ddb4ac10cbc733e04555e4eec assets/projectex_reforged/models/item/p
 7ca92ae53bbed256e8490acacecd673f650c461c assets/projectex_reforged/models/item/red_collector.json
 7ca92ae53bbed256e8490acacecd673f650c461c assets/projectex_reforged/models/item/red_compressed_collector.json
 94033182a546fe081fe4d03e1434b2090ba50623 assets/projectex_reforged/models/item/red_energy_link.json
-2f431a719d3eb4e72661760982e5e5050eac560a assets/projectex_reforged/models/item/red_matter_block.json
 62c739d3e22d1d1c5f60883b46d34dd97dda27d7 assets/projectex_reforged/models/item/red_power_flower.json
 5c7c6f765770b37d82b526eac7cd9dfebd7cc09c assets/projectex_reforged/models/item/red_relay.json
 59bb9f6eb2c12e2013f8a31eb0bcbae82d8f56ed assets/projectex_reforged/models/item/refined_link.json

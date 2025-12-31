@@ -26,6 +26,8 @@ import moze_intel.projecte.utils.text.PELang;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -38,6 +40,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 import java.text.DecimalFormat;
@@ -76,6 +79,24 @@ public class CollectorBlock extends BaseEntityBlock {
 				tile.tick();
 			}
 		};
+	}
+
+	@Override
+	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+		if (!level.isClientSide()) {
+			BlockEntity blockEntity = level.getBlockEntity(pos);
+			if (blockEntity instanceof CollectorBlockEntity collector) {
+				// Display EMC generation rate
+				player.displayClientMessage(
+					Component.literal("EMC Generation: ")
+						.withStyle(ChatFormatting.GOLD)
+						.append(Component.literal(String.format("%,d EMC/s", matter.collectorOutput))
+							.withStyle(ChatFormatting.WHITE)),
+					true
+				);
+			}
+		}
+		return InteractionResult.SUCCESS;
 	}
 
 	@Override

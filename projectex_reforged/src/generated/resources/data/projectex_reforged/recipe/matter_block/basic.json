@@ -4,7 +4,7 @@
   "group": "projectex:matter_block",
   "key": {
     "M": {
-      "item": "projectex_reforged:magenta_matter"
+      "item": "minecraft:diamond_block"
     }
   },
   "pattern": [
@@ -13,6 +13,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "projectex_reforged:magenta_matter_block"
+    "id": "projectex_reforged:basic_matter_block"
   }
 }

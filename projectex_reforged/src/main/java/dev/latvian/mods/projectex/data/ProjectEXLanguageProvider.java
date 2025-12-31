@@ -45,8 +45,11 @@ public class ProjectEXLanguageProvider extends LanguageProvider {
 		}
 
 		// Matter Blocks
+		// Skip DARK and RED - ProjectE already has dark_matter_block and red_matter_block
 		for (Matter matter : Matter.VALUES) {
-			add(ProjectEXBlocks.MATTER_BLOCK.get(matter).get(), matter.displayName + " Matter Block");
+			if (matter != Matter.DARK && matter != Matter.RED) {
+				add(ProjectEXBlocks.MATTER_BLOCK.get(matter).get(), matter.displayName + " Matter Block");
+			}
 		}
 
 		// Collectors

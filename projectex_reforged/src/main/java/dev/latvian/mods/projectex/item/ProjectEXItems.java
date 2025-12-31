@@ -103,11 +103,15 @@ public class ProjectEXItems {
 			});
 
 	// Matter Block Items
+	// Only register block items for matter blocks that exist (excludes DARK and RED)
 	public static final Map<Matter, DeferredItem<BlockItem>> MATTER_BLOCK =
 			Util.make(new LinkedHashMap<>(), map -> {
 				for (Matter matter : Matter.VALUES) {
-					map.put(matter, blockItem(matter.name + "_matter_block",
-							ProjectEXBlocks.MATTER_BLOCK.get(matter)));
+					// Skip DARK and RED - ProjectE already has those blocks
+					if (matter != Matter.DARK && matter != Matter.RED) {
+						map.put(matter, blockItem(matter.name + "_matter_block",
+								ProjectEXBlocks.MATTER_BLOCK.get(matter)));
+					}
 				}
 			});
 

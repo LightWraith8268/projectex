@@ -43,7 +43,10 @@ public class ProjectEXItemModelProvider extends ItemModelProvider {
 			withExistingParent(matter.name + "_power_flower", modLoc("block/" + matter.name + "_power_flower"));
 			withExistingParent(matter.name + "_relay", modLoc("block/" + matter.name + "_relay"));
 			withExistingParent(matter.name + "_energy_link", modLoc("block/" + matter.name + "_energy_link"));
-			withExistingParent(matter.name + "_matter_block", modLoc("block/" + matter.name + "_matter_block"));
+			// Skip DARK and RED - ProjectE already has dark_matter_block and red_matter_block
+			if (matter != Matter.DARK && matter != Matter.RED) {
+				withExistingParent(matter.name + "_matter_block", modLoc("block/" + matter.name + "_matter_block"));
+			}
 		}
 
 		withExistingParent("personal_link", modLoc("block/personal_link"));

@@ -8,9 +8,8 @@
     }
   },
   "pattern": [
-    "MMM",
-    "MMM",
-    "MMM"
+    "MM",
+    "MM"
   ],
   "result": {
     "count": 1,

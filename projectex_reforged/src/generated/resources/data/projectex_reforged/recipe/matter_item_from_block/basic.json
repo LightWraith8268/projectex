@@ -4,11 +4,11 @@
   "group": "projectex:matter_item_from_block",
   "ingredients": [
     {
-      "item": "projectex_reforged:fading_matter_block"
+      "item": "projectex_reforged:basic_matter_block"
     }
   ],
   "result": {
     "count": 4,
-    "id": "projectex_reforged:fading_matter"
+    "id": "minecraft:diamond_block"
   }
 }

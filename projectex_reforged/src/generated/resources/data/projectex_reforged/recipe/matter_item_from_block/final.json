@@ -4,11 +4,11 @@
   "group": "projectex:matter_item_from_block",
   "ingredients": [
     {
-      "item": "projectex_reforged:fading_matter_block"
+      "item": "projectex_reforged:final_matter_block"
     }
   ],
   "result": {
     "count": 4,
-    "id": "projectex_reforged:fading_matter"
+    "id": "projectex_reforged:final_star_shard"
   }
 }

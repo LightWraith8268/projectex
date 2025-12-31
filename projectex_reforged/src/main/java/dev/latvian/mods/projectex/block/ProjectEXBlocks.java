@@ -59,11 +59,15 @@ public class ProjectEXBlocks {
 			});
 
 	// Matter Blocks (for Energy Link crafting)
+	// Only register matter blocks for tiers that DON'T already exist in ProjectE (excludes DARK, RED)
 	public static final Map<Matter, DeferredBlock<Block>> MATTER_BLOCK =
 			Util.make(new LinkedHashMap<>(), map -> {
 				for (Matter matter : Matter.VALUES) {
-					map.put(matter, REGISTRY.register(matter.name + "_matter_block",
-							() -> new MatterBlock(matter)));
+					// Skip DARK and RED - ProjectE already has dark_matter_block and red_matter_block
+					if (matter != Matter.DARK && matter != Matter.RED) {
+						map.put(matter, REGISTRY.register(matter.name + "_matter_block",
+								() -> new MatterBlock(matter)));
+					}
 				}
 			});
 

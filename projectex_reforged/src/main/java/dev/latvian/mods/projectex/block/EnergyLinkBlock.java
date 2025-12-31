@@ -20,6 +20,7 @@
 package dev.latvian.mods.projectex.block;
 
 import com.mojang.serialization.MapCodec;
+import dev.latvian.mods.projectex.Matter;
 import dev.latvian.mods.projectex.block.entity.EnergyLinkBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -35,17 +36,23 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class EnergyLinkBlock extends LinkBaseBlock {
 	public static final MapCodec<EnergyLinkBlock> CODEC = simpleCodec(EnergyLinkBlock::new);
 
-	public EnergyLinkBlock(Properties properties) {
-		super(properties);
+	public final Matter matter;
+
+	public EnergyLinkBlock(Matter matter) {
+		super();
+		this.matter = matter;
 	}
 
-	public EnergyLinkBlock() {
-		super();
+	public EnergyLinkBlock(Properties properties) {
+		super(properties);
+		this.matter = Matter.BASIC; // Default for codec
 	}
 
 	@Override
@@ -72,7 +79,20 @@ public class EnergyLinkBlock extends LinkBaseBlock {
 	@Override
 	public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
 		super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+
+		NumberFormat formatter = NumberFormat.getNumberInstance(Locale.US);
+
 		tooltipComponents.add(Component.translatable("block.projectex.energy_link.tooltip")
+				.withStyle(ChatFormatting.GOLD));
+
+		// Show conversion rate: 1 EMC = X FE
+		int emcToFeRatio = EnergyLinkBlockEntity.getEmcToFeRatio(matter);
+		tooltipComponents.add(Component.literal("1 EMC = " + formatter.format(emcToFeRatio) + " FE")
 				.withStyle(ChatFormatting.GRAY));
+
+		// Show max transfer rate
+		long maxTransfer = EnergyLinkBlockEntity.getMaxTransfer(matter);
+		tooltipComponents.add(Component.literal("Max: " + formatter.format(maxTransfer) + " FE/tick")
+				.withStyle(ChatFormatting.DARK_GRAY));
 	}
 }

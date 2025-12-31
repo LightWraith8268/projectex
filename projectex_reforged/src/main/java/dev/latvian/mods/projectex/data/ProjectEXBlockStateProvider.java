@@ -65,10 +65,13 @@ public class ProjectEXBlockStateProvider extends BlockStateProvider {
 		}
 
 		// Matter Blocks (Matter-tiered)
+		// Skip DARK and RED - ProjectE already has dark_matter_block and red_matter_block
 		for (Matter matter : Matter.VALUES) {
-			simpleBlock(ProjectEXBlocks.MATTER_BLOCK.get(matter).get(),
-				models().cubeAll(matter.name + "_matter_block",
-					modLoc("block/matter_block/" + matter.name)));
+			if (matter != Matter.DARK && matter != Matter.RED) {
+				simpleBlock(ProjectEXBlocks.MATTER_BLOCK.get(matter).get(),
+					models().cubeAll(matter.name + "_matter_block",
+						modLoc("block/matter_block/" + matter.name)));
+			}
 		}
 
 		// Link blocks

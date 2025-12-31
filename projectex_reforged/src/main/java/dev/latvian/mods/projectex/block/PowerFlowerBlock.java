@@ -106,7 +106,19 @@ public class PowerFlowerBlock extends BaseEntityBlock {
 		if (!level.isClientSide()) {
 			BlockEntity blockEntity = level.getBlockEntity(pos);
 			if (blockEntity instanceof PowerFlowerBlockEntity powerFlower) {
-				player.displayClientMessage(Component.literal(powerFlower.ownerName), true);
+				// Display owner and EMC generation rate
+				long emcPerSecond = matter.getPowerFlowerOutput();
+				player.displayClientMessage(
+					Component.literal("Owner: ")
+						.withStyle(ChatFormatting.GOLD)
+						.append(Component.literal(powerFlower.ownerName)
+							.withStyle(ChatFormatting.WHITE))
+						.append(Component.literal(" | EMC: ")
+							.withStyle(ChatFormatting.GRAY))
+						.append(Component.literal(String.format("%,d EMC/s", emcPerSecond))
+							.withStyle(ChatFormatting.WHITE)),
+					true
+				);
 			}
 		}
 		return InteractionResult.SUCCESS;

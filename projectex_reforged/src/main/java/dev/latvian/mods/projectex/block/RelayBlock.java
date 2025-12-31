@@ -25,6 +25,8 @@ import dev.latvian.mods.projectex.block.entity.RelayBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -37,6 +39,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 import java.text.DecimalFormat;
@@ -75,6 +78,28 @@ public class RelayBlock extends BaseEntityBlock {
 				tile.tick();
 			}
 		};
+	}
+
+	@Override
+	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+		if (!level.isClientSide()) {
+			BlockEntity blockEntity = level.getBlockEntity(pos);
+			if (blockEntity instanceof RelayBlockEntity relay) {
+				// Display relay bonus and max transfer rate
+				player.displayClientMessage(
+					Component.literal("Relay Bonus: ")
+						.withStyle(ChatFormatting.GOLD)
+						.append(Component.literal(String.format("%,d EMC/s", matter.relayBonus))
+							.withStyle(ChatFormatting.WHITE))
+						.append(Component.literal(" | Max Transfer: ")
+							.withStyle(ChatFormatting.GRAY))
+						.append(Component.literal(String.format("%,d EMC/s", matter.relayTransfer))
+							.withStyle(ChatFormatting.WHITE)),
+					true
+				);
+			}
+		}
+		return InteractionResult.SUCCESS;
 	}
 
 	@Override

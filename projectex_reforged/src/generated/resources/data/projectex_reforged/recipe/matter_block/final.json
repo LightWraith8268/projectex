@@ -4,7 +4,7 @@
   "group": "projectex:matter_block",
   "key": {
     "M": {
-      "item": "projectex_reforged:magenta_matter"
+      "item": "projectex_reforged:final_star_shard"
     }
   },
   "pattern": [
@@ -13,6 +13,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "projectex_reforged:magenta_matter_block"
+    "id": "projectex_reforged:final_matter_block"
   }
 }

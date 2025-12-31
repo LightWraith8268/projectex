@@ -77,29 +77,33 @@ public class ProjectEXRecipeProvider extends RecipeProvider {
 		}
 
 		// ===== MATTER BLOCK RECIPES =====
-		// 9 matter items -> 1 matter block (storage)
-		// 1 matter block -> 9 matter items (unpacking)
+		// 4 matter items -> 1 matter block (2x2 crafting)
+		// 1 matter block -> 4 matter items (unpacking)
+		// Skip DARK and RED - ProjectE already has those blocks
 		for (Matter matter : Matter.VALUES) {
-			if (matter.hasMatterItem) {
+			if (matter != Matter.DARK && matter != Matter.RED) {
 				Item matterItem = matter.getItem().get();
-				Item matterBlock = ProjectEXBlocks.MATTER_BLOCK.get(matter).get().asItem();
 
-				// Crafting: 9 matter items -> 1 matter block
-				ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, matterBlock)
-					.pattern("MMM")
-					.pattern("MMM")
-					.pattern("MMM")
-					.define('M', matterItem)
-					.group("projectex:matter_block")
-					.unlockedBy("has_matter_item", has(matterItem))
-					.save(output, ProjectEX.MOD_ID + ":matter_block/" + matter.name);
+				// Only create recipes if we actually registered a matter block for this tier
+				if (ProjectEXBlocks.MATTER_BLOCK.containsKey(matter)) {
+					Item matterBlock = ProjectEXBlocks.MATTER_BLOCK.get(matter).get().asItem();
 
-				// Unpacking: 1 matter block -> 9 matter items
-				ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, matterItem, 9)
-					.requires(matterBlock)
-					.group("projectex:matter_item_from_block")
-					.unlockedBy("has_matter_block", has(matterBlock))
-					.save(output, ProjectEX.MOD_ID + ":matter_item_from_block/" + matter.name);
+					// Crafting: 4 matter items -> 1 matter block (2x2)
+					ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, matterBlock)
+						.pattern("MM")
+						.pattern("MM")
+						.define('M', matterItem)
+						.group("projectex:matter_block")
+						.unlockedBy("has_matter_item", has(matterItem))
+						.save(output, ProjectEX.MOD_ID + ":matter_block/" + matter.name);
+
+					// Unpacking: 1 matter block -> 4 matter items
+					ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, matterItem, 4)
+						.requires(matterBlock)
+						.group("projectex:matter_item_from_block")
+						.unlockedBy("has_matter_block", has(matterBlock))
+						.save(output, ProjectEX.MOD_ID + ":matter_item_from_block/" + matter.name);
+				}
 			}
 		}
 
@@ -308,11 +312,21 @@ public class ProjectEXRecipeProvider extends RecipeProvider {
 			Matter prev = matter.getPrev();
 			if (prev != null) {
 				// Pattern: _M_/MEM/_M_ where M = matter block, E = previous energy link
+				// Use ProjectE blocks for DARK and RED, ProjectEX blocks for others
+				Item matterBlock;
+				if (matter == Matter.DARK) {
+					matterBlock = PEBlocks.DARK_MATTER.asItem();
+				} else if (matter == Matter.RED) {
+					matterBlock = PEBlocks.RED_MATTER.asItem();
+				} else {
+					matterBlock = ProjectEXBlocks.MATTER_BLOCK.get(matter).get().asItem();
+				}
+
 				ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ProjectEXBlocks.ENERGY_LINK.get(matter).get())
 					.pattern(" M ")
 					.pattern("MEM")
 					.pattern(" M ")
-					.define('M', ProjectEXBlocks.MATTER_BLOCK.get(matter).get())
+					.define('M', matterBlock)
 					.define('E', ProjectEXBlocks.ENERGY_LINK.get(prev).get())
 					.group("projectex:energy_link")
 					.unlockedBy("has_" + prev.name + "_energy_link", has(ProjectEXBlocks.ENERGY_LINK.get(prev).get()))
