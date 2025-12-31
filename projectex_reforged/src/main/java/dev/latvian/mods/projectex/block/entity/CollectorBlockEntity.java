@@ -30,18 +30,12 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class CollectorBlockEntity extends BlockEntity implements IEmcStorage {
-	private static final Logger LOGGER = LoggerFactory.getLogger(CollectorBlockEntity.class);
-
 	public int tick = 0;
 	public long storedEMC = 0L;
-	private int debugLogCounter = 0; // Log every 100 ticks (5 seconds) to avoid spam
 
 	public CollectorBlockEntity(BlockPos pos, BlockState state) {
 		super(ProjectEXBlockEntities.COLLECTOR.get(), pos, state);
@@ -67,7 +61,6 @@ public class CollectorBlockEntity extends BlockEntity implements IEmcStorage {
 		}
 
 		tick++;
-		debugLogCounter++;
 
 		if (tick >= 20) {
 			tick = 0;
@@ -75,20 +68,14 @@ public class CollectorBlockEntity extends BlockEntity implements IEmcStorage {
 			BlockState state = getBlockState();
 
 			if (state.getBlock() instanceof CollectorBlock collector) {
-				long previousEMC = storedEMC;
 				storedEMC += collector.matter.collectorOutput;
 
-				// Log every 100 ticks (5 seconds) to avoid spam
-				if (debugLogCounter >= 100) {
-					debugLogCounter = 0;
-					LOGGER.info("[CollectorBlockEntity] @ {} - Tier: {}, Generated: {} EMC, Total: {} EMC",
-							worldPosition,
-							collector.matter.name,
-							collector.matter.collectorOutput,
-							storedEMC);
+				// Early exit if no EMC to transfer
+				if (storedEMC <= 0L) {
+					return;
 				}
 
-				List<IEmcStorage> temp = new ArrayList<>(1);
+				List<IEmcStorage> temp = new ArrayList<>(6);
 
 				for (Direction direction : ProjectEX.DIRECTIONS) {
 					BlockPos targetPos = worldPosition.relative(direction);
@@ -116,22 +103,12 @@ public class CollectorBlockEntity extends BlockEntity implements IEmcStorage {
 				if (!temp.isEmpty() && storedEMC >= temp.size()) {
 					long s = storedEMC / temp.size();
 
-					if (debugLogCounter == 0) {
-						LOGGER.info("[CollectorBlockEntity] @ {} - Attempting to transfer {} EMC to {} adjacent storages",
-								worldPosition, s, temp.size());
-					}
-
 					for (IEmcStorage storage : temp) {
 						long a = storage.insertEmc(s, EmcAction.EXECUTE);
 
 						if (a > 0L) {
 							storedEMC -= a;
 							setChanged();
-
-							if (debugLogCounter == 0) {
-								LOGGER.info("[CollectorBlockEntity] @ {} - Transferred {} EMC, Remaining: {} EMC",
-										worldPosition, a, storedEMC);
-							}
 
 							if (storedEMC < s) {
 								break;

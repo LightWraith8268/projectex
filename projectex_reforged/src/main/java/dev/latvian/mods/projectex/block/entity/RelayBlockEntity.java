@@ -70,7 +70,7 @@ public class RelayBlockEntity extends BlockEntity implements IEmcStorage {
 			if (state.getBlock() instanceof RelayBlock relay) {
 				long relayTransfer = relay.matter.relayTransfer;
 
-				List<IEmcStorage> temp = new ArrayList<>(1);
+				List<IEmcStorage> temp = new ArrayList<>(6);
 
 				for (Direction direction : ProjectEX.DIRECTIONS) {
 					BlockPos targetPos = worldPosition.relative(direction);
